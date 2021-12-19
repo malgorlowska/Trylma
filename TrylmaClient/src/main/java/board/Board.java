@@ -1,11 +1,15 @@
 package board;
 
+import socketClient.SocketClient;
+
 import javax.swing.*;
 import java.awt.*;
+import java.net.Socket;
 import java.util.ArrayList;
 
 public abstract class Board extends JPanel {
     public ArrayList<BoardField> fields = new ArrayList<>();
+    private SocketClient client;
 
     @Override
     public void paint(Graphics g) {
@@ -21,4 +25,7 @@ public abstract class Board extends JPanel {
     }
 
     abstract void setFields(ArrayList<BoardField> fields);
+    public void setClient(SocketClient client) {
+        this.client = client;
+    }
 }

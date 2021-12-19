@@ -6,14 +6,9 @@ import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ButtonsBox extends Box{
 	
@@ -43,7 +38,7 @@ public class ButtonsBox extends Box{
             // Sending to the server
             if(forKey.getText() != null) 
             {
-            	app.client.out.println("MESSAGE|".concat(forKey.getText()));
+            	app.player.out.println("MESSAGE|".concat(forKey.getText()));
                     //board.repaint();
                 
                 forKey.setText("");
@@ -53,10 +48,10 @@ public class ButtonsBox extends Box{
         
         addButton(this, showMessages, (ActionEvent event) -> 
         {
-            	app.client.out.println("GET|");
+            	app.player.out.println("GET|");
 
 					try {
-						System.out.println(app.client.in.readLine());
+						System.out.println(app.player.in.readLine());
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

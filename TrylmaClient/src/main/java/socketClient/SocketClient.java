@@ -1,5 +1,8 @@
 package socketClient;
 
+import board.*;
+import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -15,7 +18,9 @@ import java.net.UnknownHostException;
  */
 public class SocketClient 
 {
-	int playerId;
+	private int playerId;
+    private PlayerColor playerColor;
+    private Board board;
 	Socket socket = null;
     public PrintWriter out = null;
     public BufferedReader in = null;
@@ -30,14 +35,12 @@ public class SocketClient
         this.port = port;
 	}
     
-    
     /**
      * Connects to the socket, exchanges data with the server.
      */
     public void listenSocket()
     {
-        try 
-        {
+        try {
         	System.out.println("otwieram socketa");
           socket = new Socket("localhost", port);
           // Connecting with socket
@@ -55,18 +58,50 @@ public class SocketClient
          // objectInput = new ObjectInputStream(socket.getInputStream());
           System.out.println("koniec otwierania socketa");
           //playerId = Integer.parseInt(in.readLine()); // try catch powinien byc
-          playerId = input.readInt();
-          System.out.println("My id is " + playerId);
+          String[] receivedData = in.readLine().split("[|]");
+          setPlayerId(Integer.parseInt(receivedData[0]));
+          setPlayerColor(PlayerColor.fromInteger(getPlayerId()));
+          setBoard(receivedData[1]);
+          System.out.println("My id is " + getPlayerId());
+          System.out.println("My color is " + getPlayerColor().toString());
         }
         catch (UnknownHostException e) 
         {
            System.out.println("Unknown host: localhost"); System.exit(1);
         }
-         catch  (IOException e) 
-        {
+         catch  (IOException e) {
            System.out.println("No I/O"); System.exit(1);
            System.out.println(e.getStackTrace());
         }
     }
 
+    public int getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
+    }
+
+    public PlayerColor getPlayerColor() {
+        return playerColor;
+    }
+
+    public void setPlayerColor(PlayerColor playerColor) {
+        this.playerColor = playerColor;
+    }
+
+    public Board getBoard () {
+        return this.board;
+    }
+
+    public void setBoard (String jsonBoard) {
+    DefaultBoardBuilder builder = new DefaultBoardBuilder();
+    try {
+        builder.setBoardFields(jsonBoard);
+    } catch (JSONException e) {
+        e.printStackTrace();
+    }
+    this.board = builder.getDefaultBoard();
+}
 }

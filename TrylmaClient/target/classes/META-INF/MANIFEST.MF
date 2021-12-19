@@ -1,7 +1,0 @@
-Manifest-Version: 1.0
-Built-By: malgo
-Build-Jdk: 11.0.9
-Class-Path: json-1.0.0.jar
-Main-Class: socketClient.TrylmaClient
-Created-By: Maven Integration for Eclipse
-

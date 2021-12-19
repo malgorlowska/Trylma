@@ -1,10 +1,12 @@
 package board;
 
+import socketClient.SocketClient;
+
 import java.util.ArrayList;
 
 public class DefaultBoard extends Board {
 
-    public DefaultBoard() {
+    public DefaultBoard () {
         this.isDoubleBuffered();
         this.setOpaque(true);
     }

@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class DefaultBoardBuilder implements BoardBuilder{
+public class DefaultBoardBuilder implements BoardBuilder {
     DefaultBoard board = new DefaultBoard();
 
     @Override

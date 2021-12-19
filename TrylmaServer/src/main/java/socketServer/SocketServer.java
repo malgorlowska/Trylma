@@ -1,14 +1,8 @@
 package socketServer;
 
-import java.io.BufferedReader;
-import java.io.FileOutputStream;
+import Board.*;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import java.lang.ref.Reference;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -27,6 +21,7 @@ public class SocketServer
     public static List<Player> players;
 	int numberOfPlayers;
     int port;
+    Board board;
     Vector<String> messages;
 	
   /**
@@ -42,13 +37,15 @@ public class SocketServer
     this.messages = new Vector<String>();
 	players = new ArrayList<>();
 
-    try
-    {
+    DefaultBoardBuilder boardBuilder = new DefaultBoardBuilder();
+    boardBuilder.initializeBoardFields();
+    this.board = boardBuilder.getDefaultBoard();
+
+    try {
       server = new ServerSocket(port); 
       System.out.println("The server is running.");
     } 
-    catch (IOException e) 
-    {
+    catch (IOException e) {
       System.out.println("Could not listen on port " + port); System.exit(-1);
     }
   }
@@ -61,10 +58,8 @@ public class SocketServer
       ExecutorService executors = Executors.newFixedThreadPool(numberOfPlayers);
 
       int newPlayerId = 1;
-
-      while(players.size() < numberOfPlayers)
-      {
-          Player player = new Player(server.accept(), newPlayerId, this.messages);
+      while (players.size() < numberOfPlayers) {
+          Player player = new Player(server.accept(), this.getInitializationData(newPlayerId), this.messages);
           players.add(player);
           executors.execute(player);
           System.out.println("Player " + newPlayerId + " has connected.");
@@ -79,18 +74,24 @@ public class SocketServer
   @Override
   protected void finalize() 
   {
-    try 
-    {
+    try {
       //in.close();
       //out.close();
       //client.close();
       server.close();
     } 
-    catch (IOException e) 
-    {
+    catch (IOException e) {
       System.out.println("Could not close."); System.exit(-1);
     }
   }
+
+  private String getInitializationData (int playerID) {
+      String data;
+      JSONBoardConverter converter = new JSONBoardConverter();
+      String jsonBoard = converter.buildJSONBoard(this.board);
+      data = playerID + "|" + jsonBoard;
+      return data;
+}
         
     
 }

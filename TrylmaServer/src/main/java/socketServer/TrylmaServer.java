@@ -23,7 +23,7 @@ public class TrylmaServer
     	SocketServer server = null;
 
     	try {
-    	port = Integer.parseInt(args[0]);
+    		port = Integer.parseInt(args[0]);
     	}
     	catch (NumberFormatException ex){
             ex.printStackTrace();
@@ -36,8 +36,7 @@ public class TrylmaServer
             ex.printStackTrace();
         }
     	
-    	
-			server = new SocketServer(port,numberOfPlayers);
+		server = new SocketServer(port,numberOfPlayers);
 		try {
 			server.listenSocket();
 		} catch (IOException e) {

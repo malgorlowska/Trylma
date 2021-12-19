@@ -14,41 +14,39 @@ import java.util.concurrent.Executors;
  * 
  *
  */
-public class Player implements Runnable
-{
-	int id;
+public class Player implements Runnable {
 	Socket socket;
 	Scanner input;
 	DataOutputStream outputStream;
 	PrintWriter output;
     Vector<String> messages;
 	
-	public Player(Socket socket, int id, Vector<String> messages)
-	{
+	public Player(Socket socket, String initializeData, Vector<String> messages) {
 		this.socket = socket;
-		this.id = id;
         this.messages = messages;
-	}
+
+        try {
+            this.setup();
+        } catch (IOException e) {
+            System.out.println("Player creating error");
+        }
+        this.output.println(initializeData);
+    }
 
 	 @Override
      public void run() {
          try {
-             setup();
-             outputStream.writeInt(id);
-
-             while(input.hasNextLine()){
+             while (input.hasNextLine()) {
                  String message = input.nextLine();
                  System.out.println("Received message" + message + " from socket: " + socket);
                  String command = message.split("[|]")[0];
                  System.out.println("Read command: " + command);
-                 if(command.equals("MESSAGE"))
-                 {
+                 if (command.equals("MESSAGE")) {
                      System.out.println("Saving message in vector");
                      messages.add(message);
                  }
 
-                else if(command.equals("GET"))
-                 {
+                else if(command.equals("GET")) {
                      System.out.println("Sending back all messages");
                      output.println(messages);
                  }
@@ -69,5 +67,5 @@ public class Player implements Runnable
          output = new PrintWriter(socket.getOutputStream(), true);
          outputStream = new DataOutputStream(socket.getOutputStream());
      }
-     
+
 }
