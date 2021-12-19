@@ -8,8 +8,8 @@ public class JSONBoardConverter {
         for (BoardField field : board.fields) {
             addContent("{\"row\":\"" + field.getRow() + "\",");
             addContent("\"column\":\"" + field.getColumn() + "\",");
-            addContent("\"xFramePosition\":\"" + field.x + "\",");
-            addContent("\"yFramePosition\":\"" + field.y + "\",");
+            addContent("\"xFramePosition\":\"" + field.getXPosition() + "\",");
+            addContent("\"yFramePosition\":\"" + field.getYPosition() + "\",");
             addContent("\"playerColorID\":\"" + field.getPlayerColor().playerColorID + "\",");
             addContent("\"statusColorID\":\"" + field.getStatusColor().statusColorID + "\"");
             if (field.equals(board.fields.get(board.fields.size() - 1))) {

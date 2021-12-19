@@ -10,56 +10,6 @@ public class DefaultBoardBuilder implements BoardBuilder{
     DefaultBoard board = new DefaultBoard();
 
     @Override
-    public void setBoardFields() {
-        int[][] defaultBoardShape =
-       {{0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-        {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-        {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-        {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-        {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-        {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0}};
-
-        ArrayList<BoardField> fields = new ArrayList<>();
-
-        int xPosition;
-        int defXPosition = 50;
-        int yPosition = 10;
-
-        for (int i = 0; i < defaultBoardShape.length; i++) {
-            if(i % 2 == 0){xPosition = defXPosition;}
-            else { xPosition = defXPosition + 25;}
-            for (int j = 0; j < defaultBoardShape[0].length; j++){
-                if(defaultBoardShape[i][j] == 1){
-                    BoardField field = new BoardField(xPosition, yPosition);
-                    field.setRow(i);
-                    field.setColumn(j);
-                    fields.add(field);
-                }
-                xPosition += 40;
-
-            }
-            yPosition += 30;
-        }
-
-        for ( BoardField field: fields) {
-            field.setCurrentPlayerColor(PlayerColor.NO_PLAYER);
-            field.setCurrentStatusColor(StatusColor.GREEN);
-        }
-        this.board.setFields(fields);
-
-    }
-
     public void setBoardFields(String JSONBoard) throws JSONException {
         ArrayList<BoardField> fields = new ArrayList<>();
         JSONObject object = new JSONObject(JSONBoard);

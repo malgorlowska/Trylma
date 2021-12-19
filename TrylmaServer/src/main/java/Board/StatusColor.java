@@ -4,7 +4,7 @@ public enum StatusColor {
     GREEN(2),
     RED(1);
 
-    public int statusColorID;
+    public final int statusColorID;
 
     StatusColor(int statusColorID) {
         this.statusColorID = statusColorID;

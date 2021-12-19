@@ -9,7 +9,7 @@ public enum PlayerColor {
     WHITE(6),
     NO_PLAYER(7);
 
-    public int playerColorID;
+    public final int playerColorID;
 
     PlayerColor(int playerColorID){
         this.playerColorID = playerColorID;

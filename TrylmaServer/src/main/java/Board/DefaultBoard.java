@@ -5,8 +5,7 @@ import java.util.ArrayList;
 public class DefaultBoard extends Board {
 
     public DefaultBoard() {
-        this.isDoubleBuffered();
-        this.setOpaque(true);
+
     }
 
     @Override

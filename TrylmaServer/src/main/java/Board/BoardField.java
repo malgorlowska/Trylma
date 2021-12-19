@@ -3,34 +3,29 @@ package Board;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
-public class BoardField extends Ellipse2D.Double {
+public class BoardField {
     private Color currentPlayerColor;
     private Color currentStatusColor;
     private PlayerColor playerColor;
     private StatusColor statusColor;
+    private double xPosition;
+    private double yPosition;
     private int row;
     private int column;
 
-    public BoardField(int x, int y) {
-        this.setFrame(x, y, 25, 20);
-    }
 
     public BoardField(int row, int column, double xPosition, double yPosition,
-                      int playerColorID, int statusColorID){
+                      int playerColorID, int statusColorID) {
 
-        this.setFrame(xPosition, yPosition, 25, 20);
         this.setRow(row);
         this.setColumn(column);
+        this.setXPosition(xPosition);
+        this.setYPosition(yPosition);
         PlayerColor playerColor = PlayerColor.fromInteger(playerColorID);
         StatusColor statusColor = StatusColor.fromInteger(statusColorID);
         this.setCurrentPlayerColor(playerColor);
         this.setCurrentStatusColor(statusColor);
     }
-
-    public boolean isHit(int x, int y) {
-        return this.getBounds2D().contains(x, y);
-    }
-
 
     public Color getCurrentPlayerColor() {
         return currentPlayerColor;
@@ -85,5 +80,21 @@ public class BoardField extends Ellipse2D.Double {
 
     public StatusColor getStatusColor() {
         return statusColor;
+    }
+
+    public double getXPosition() {
+        return xPosition;
+    }
+
+    public void setXPosition(double xPosition) {
+        this.xPosition = xPosition;
+    }
+
+    public double getYPosition() {
+        return yPosition;
+    }
+
+    public void setYPosition(double yPosition) {
+        this.yPosition = yPosition;
     }
 }

@@ -10,7 +10,7 @@ public class DefaultBoardBuilder implements BoardBuilder{
     DefaultBoard board = new DefaultBoard();
 
     @Override
-    public void setBoardFields() {
+    public void initializeBoardFields() {
         int[][] defaultBoardShape =
        {{0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
@@ -35,31 +35,25 @@ public class DefaultBoardBuilder implements BoardBuilder{
         int xPosition;
         int defXPosition = 50;
         int yPosition = 10;
+        int pColorID = PlayerColor.NO_PLAYER.playerColorID;
+        int sColorID = StatusColor.GREEN.statusColorID;
 
         for (int i = 0; i < defaultBoardShape.length; i++) {
             if(i % 2 == 0){xPosition = defXPosition;}
             else { xPosition = defXPosition + 25;}
             for (int j = 0; j < defaultBoardShape[0].length; j++){
                 if(defaultBoardShape[i][j] == 1){
-                    BoardField field = new BoardField(xPosition, yPosition);
-                    field.setRow(i);
-                    field.setColumn(j);
+                    BoardField field = new BoardField(i, j, xPosition, yPosition, pColorID, sColorID);
                     fields.add(field);
                 }
                 xPosition += 40;
-
             }
             yPosition += 30;
         }
-
-        for ( BoardField field: fields) {
-            field.setCurrentPlayerColor(PlayerColor.NO_PLAYER);
-            field.setCurrentStatusColor(StatusColor.GREEN);
-        }
         this.board.setFields(fields);
-
     }
 
+    @Override
     public void setBoardFields(String JSONBoard) throws JSONException {
         ArrayList<BoardField> fields = new ArrayList<>();
         JSONObject object = new JSONObject(JSONBoard);
@@ -80,11 +74,6 @@ public class DefaultBoardBuilder implements BoardBuilder{
 
     @Override
     public void assignFields(int numberOfPlayers) {
-
-    }
-
-    @Override
-    public void addMouseListener() {
 
     }
 
