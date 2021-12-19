@@ -53,34 +53,17 @@ public class ButtonsBox extends Box{
         
         addButton(this, showMessages, (ActionEvent event) -> 
         {
-        	/*Vector<String> messages = new Vector<>();
-			try {
-				messages = (Vector<String>) app.client.objectInput.readObject();
-			} catch (ClassNotFoundException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
-		
-            
-            
-            	app.client.out.println("GET");
-            	
-				
+            	app.client.out.println("GET|");
+
 					try {
 						System.out.println(app.client.in.readLine());
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-		
-				
-		
             
         });  //END SHOW_MESSAGES
 
-        
-
-        
     }
     
     /**

@@ -9,6 +9,8 @@ import java.io.PrintWriter;
 import java.lang.ref.Reference;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,17 +24,10 @@ import java.util.concurrent.Executors;
 public class SocketServer
 {
 	ServerSocket server = null;
+    public static List<Player> players;
 	int numberOfPlayers;
-
-	private Vector<Player> players = null; //lista graczy?
-	//Socket client = null;
-	//BufferedReader in = null;
-	//PrintWriter out = null;
-	//String line = ""; //server zczytuje po linii
-	
-	//Vector<String> messages = new Vector<>(); //wektor wszystkich komend przesłanych do serwera
-	//FileOutputStream file;
-	//ObjectOutputStream objectOutput = null;
+    int port;
+    Vector<String> messages;
 	
   /**
    * Basic constructor.
@@ -43,89 +38,39 @@ public class SocketServer
   { 
 	System.out.println("Server");
 	this.numberOfPlayers = numberOfPlayers;
-	players = new Vector<Player>();
-    try 
-    {
-    	
-      server = new ServerSocket(port); 
-      //file = new FileOutputStream("file.txt");
+    this.port = port;
+    this.messages = new Vector<String>();
+	players = new ArrayList<>();
 
-      // Creates an ObjectOutputStream
-      //objectOutput = new ObjectOutputStream(file);
+    try
+    {
+      server = new ServerSocket(port); 
+      System.out.println("The server is running.");
     } 
     catch (IOException e) 
     {
-      System.out.println("Could not listen on port 4444"); System.exit(-1);
+      System.out.println("Could not listen on port " + port); System.exit(-1);
     }
   }
 
   /**
-   * Reading input from socket 4444.
+   * Reading input from socket
    */
-  public void listenSocket() 
-  {
-    try 
-    {
-    	System.out.println("Waiting for connections with " + numberOfPlayers + " players.");
-    	for( int i = 0; i < numberOfPlayers; i++)
-    	{
-    		Socket s = server.accept();
-    		//clients.add(new Player(server.accept(), i));
-    		System.out.println("Player " + i + " has connected.");
-    		Player player = new Player(s, i+1);
-    		players.add(player);
-    		System.out.println("Dodałam nowego gracza do polaczen serwera.");
-    		Thread t = new Thread(player);
-			//System.out.println("utworzylam nowy watek");
-			t.start();
-    	}
-      //client = server.accept();
-    } 
-    catch (IOException e) 
-    {
-      System.out.println("Accept failed: 4444"); System.exit(-1);
-    }
-    
-    /*try 
-    {
-      // Receiving from a socket.
-      in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-      // Sending to the socket(string)
-      out = new PrintWriter(client.getOutputStream(), true);
-      // Sending to the socket(object)
-      objectOutput = new ObjectOutputStream(client.getOutputStream());
-      
-    } 
-    catch (IOException e) 
-    {
-      System.out.println("Accept failed: 4444"); System.exit(-1);
-    }
-    
-    while(line != null) 
-    {
-      try 
-        {
-            // Strings received from a socket.
-          line = in.readLine();
-          // Print to server
-          System.out.println(line);       
-          
-          if(line.equals("GET"));
-          {
-        	  out.println("Server has already read your message: " + line); 
-              //objectOutput.writeObject(line);	  
-          }
-          
-          //messages.add(line);     
-          //objectOutput.writeObject(messages);
-          //objectOutput.close();
-        
-        } 
-        catch (IOException e) 
-        {
-          System.out.println("Read failed"); System.exit(-1);
-        } 
-    }*/
+  public void listenSocket() throws IOException {
+      System.out.println("Waiting for connections with " + numberOfPlayers + " players.");
+      ExecutorService executors = Executors.newFixedThreadPool(numberOfPlayers);
+
+      int newPlayerId = 1;
+
+      while(players.size() < numberOfPlayers)
+      {
+          Player player = new Player(server.accept(), newPlayerId, this.messages);
+          players.add(player);
+          executors.execute(player);
+          System.out.println("Player " + newPlayerId + " has connected.");
+          newPlayerId++;
+      }
+      //System.out.println("Connected players:" + players.size());
   }
 
   /**

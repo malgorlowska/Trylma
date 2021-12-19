@@ -38,22 +38,12 @@ public class TrylmaServer
     	
     	
 			server = new SocketServer(port,numberOfPlayers);
+		try {
 			server.listenSocket();
-    	
-    	/*players = Executors.newFixedThreadPool(numberOfPlayers);
-        
-        game = new Game(numberOfPlayers);
-        game.currentPlayer = 1;
-        
-        for(int i = 0; i < numberOfPlayers; i++)
-        {
-        	try {
-				players.execute(new Player(server.accept(), i+1, this));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        }*/
-        
-    }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+
+	}
 }
