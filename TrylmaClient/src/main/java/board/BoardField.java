@@ -35,13 +35,26 @@ public class BoardField extends Ellipse2D.Double {
     public void setCurrentPlayerColor(PlayerColor playerColor) {
         this.playerColor = playerColor;
         switch (playerColor) {
-            case BLUE -> this.currentPlayerColor  = Color.CYAN;
-            case ORANGE -> this.currentPlayerColor = Color.ORANGE;
-            case PINK -> this.currentPlayerColor = Color.PINK;
-            case PURPLE -> this.currentPlayerColor = Color.MAGENTA;
-            case BLACK -> this.currentPlayerColor = Color.BLACK;
-            case WHITE -> this.currentPlayerColor = Color.WHITE;
-            case NO_PLAYER -> this.currentPlayerColor = Color.GRAY;
+            case BLUE:
+                this.currentPlayerColor  = Color.CYAN;
+                break;
+            case ORANGE:
+                this.currentPlayerColor = Color.ORANGE;
+                break;
+            case PINK:
+                this.currentPlayerColor = Color.PINK;
+                break;
+            case PURPLE:
+                this.currentPlayerColor = Color.MAGENTA;
+                break;
+            case BLACK:
+                this.currentPlayerColor = Color.BLACK;
+                break;
+            case WHITE:
+                this.currentPlayerColor = Color.WHITE;
+                break;
+            case NO_PLAYER:
+                this.currentPlayerColor = Color.GRAY;
         }
     }
 
@@ -53,8 +66,12 @@ public class BoardField extends Ellipse2D.Double {
     public void setCurrentStatusColor(StatusColor statusColor) {
         this.statusColor = statusColor;
         switch (statusColor){
-            case RED -> this.currentStatusColor = Color.RED;
-            case GREEN -> this.currentStatusColor = Color.GREEN;
+            case RED:
+                this.currentStatusColor = Color.RED;
+                break;
+            case GREEN:
+                this.currentStatusColor = Color.GREEN;
+                break;
         }
     }
 

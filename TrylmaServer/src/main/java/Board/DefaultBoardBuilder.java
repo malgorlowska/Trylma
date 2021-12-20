@@ -84,6 +84,7 @@ public class DefaultBoardBuilder implements BoardBuilder{
                 for (BoardField field : this.board.startFields.bottomFields) {
                     field.setCurrentPlayerColor(PlayerColor.ORANGE);
                 }
+                break;
             }
 
             case 3:
@@ -97,6 +98,7 @@ public class DefaultBoardBuilder implements BoardBuilder{
                 for (BoardField field : this.board.startFields.bottomFields) {
                     field.setCurrentPlayerColor(PlayerColor.PINK);
                 }
+                break;
             }
 
             case 4:
@@ -113,6 +115,7 @@ public class DefaultBoardBuilder implements BoardBuilder{
                 for (BoardField field : this.board.startFields.bottomRightFields) {
                     field.setCurrentPlayerColor(PlayerColor.PURPLE);
                 }
+                break;
             }
 
             case 6:
@@ -135,6 +138,7 @@ public class DefaultBoardBuilder implements BoardBuilder{
                 for (BoardField field : this.board.startFields.bottomFields) {
                     field.setCurrentPlayerColor(PlayerColor.WHITE);
                 }
+                break;
             }
         }
     }
