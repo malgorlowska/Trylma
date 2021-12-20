@@ -24,7 +24,7 @@ public class Player implements Runnable {
 	public PrintWriter output;
     int id;
     Game game;
-    Vector<String> messages;
+    Vector<String> messages; //zbędne
 	
 	public Player(Socket socket, int id, Vector<String> messages) {
 		this.socket = socket;
@@ -54,15 +54,21 @@ public class Player implements Runnable {
                  System.out.println("Received message" + message + " from socket: " + socket);
                  String command = message.split("[|]")[0];
                  System.out.println("Read command: " + command);
-                 if (command.equals("MESSAGE")) {
-                     System.out.println("Saving message in vector");
-                     messages.add(message);
+                 if (command.equals("QUIT")) {
+                     System.out.println(id + "has left the game");
+                     messages.add(message);//zbędne
+                     return;
+                 }
+                 else if (command.equals("MOVE")) {
+                     System.out.println("player " + id + "is trying to move");
+                     messages.add(message);//zbędne
+                     moveCommand(message.split("[|]")[1]);//Integer.parseInt(command.substring(5)));
                  }
 
-                else if(command.equals("GET")) {
+                /*else if(command.equals("GET")) {
                      System.out.println("Sending back all messages");
                      output.println(messages);
-                 }
+                 }*/
 
              }
          } catch (Exception e) {
@@ -75,13 +81,18 @@ public class Player implements Runnable {
          }
      }
 
+     private void moveCommand(String command)
+     {
+         game.move(command, id);
+     }
+
      public void setGame(Game g){
         this.game = g;
      }
+
     public int getId(){
         return id;
     }
-
 
     public void sendMessage(String message) {
         System.out.println("probuje wyslac wiadomosc: " + message);

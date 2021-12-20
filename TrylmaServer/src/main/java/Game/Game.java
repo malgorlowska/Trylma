@@ -25,18 +25,18 @@ public class Game //singleton
 	int currentPlayer;
     public static List<Player> players;
     DefaultBoardBuilder boardBuilder;
+    TrylmaRules rules;
     Board board;
 
 	public Game(List<Player> players) {
 	this.players = players;
     this.playersCount = players.size();
-
+    this.rules = new TrylmaRules();
     DefaultBoardBuilder boardBuilder = new DefaultBoardBuilder();
     boardBuilder.initializeBoardFields();
     this.board = boardBuilder.getDefaultBoard();
         for (Player player:players) {
             player.setGame(this);
-            System.out.println("zaraz wysle wiadomosc do klienta");
             player.sendMessage(getInitializationData(player.getId()));
         }
 	}
@@ -58,7 +58,17 @@ public class Game //singleton
         }
     }*/
 
+     public synchronized void move(String command, int id) {
+         //sprawdzenie czy klieny jest aktualnym graczem
+         //sprawdzenie czy jego ruch jest poprawny
+         //uaktualnienie planszy w serwerze
+         //sprawdzenie czy nie wygrał
+         //przesłanie do wszystkich uaktualnionej planszy
+     }
+
     public Board getBoard(){
         return board;
     }
+
+
 }
