@@ -60,13 +60,15 @@ public class SocketServer
 
       int newPlayerId = 1;
       while (players.size() < numberOfPlayers) {
-          Player player = new Player(server.accept(), this.getInitializationData(newPlayerId), this.messages);
+          Player player = new Player(server.accept(), newPlayerId, this.messages);
           players.add(player);
           executors.execute(player);
           System.out.println("Player " + newPlayerId + " has connected.");
           newPlayerId++;
       }
       game = new Game(players);
+      for(Player player:players)
+          player.output.println(player.getInitializationData(player.getId()));
   }
 
   /**
@@ -83,11 +85,4 @@ public class SocketServer
     }
   }
 
-  private String getInitializationData (int playerID) {
-      String data;
-      JSONBoardConverter converter = new JSONBoardConverter();
-      String jsonBoard = converter.buildJSONBoard(game.getBoard());
-      data = playerID + "|" + jsonBoard;
-      return data;
-}
 }

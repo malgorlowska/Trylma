@@ -3,6 +3,7 @@ package Game;
 import Board.Board;
 import Board.DefaultBoardBuilder;
 import socketServer.Player;
+import Board.JSONBoardConverter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -29,12 +30,17 @@ public class Game //singleton
 	public Game(List<Player> players) {
 	this.players = players;
     this.playersCount = players.size();
+        for (Player player:players) {
+            player.setGame(this);
+        }
+
 
     DefaultBoardBuilder boardBuilder = new DefaultBoardBuilder();
     boardBuilder.initializeBoardFields();
     this.board = boardBuilder.getDefaultBoard();
 	}
-	
+
+
  /*public synchronized void showMessage(int player) {
         if (player != currentPlayer) {
             throw new IllegalStateException("Not your turn");

@@ -1,5 +1,8 @@
 package socketServer;
 
+import Board.JSONBoardConverter;
+import Game.Game;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,19 +21,35 @@ public class Player implements Runnable {
 	Socket socket;
 	Scanner input;
 	DataOutputStream outputStream;
-	PrintWriter output;
+	public PrintWriter output;
+    int id;
+    Game game;
     Vector<String> messages;
 	
-	public Player(Socket socket, String initializeData, Vector<String> messages) {
+	public Player(Socket socket, int id, Vector<String> messages) {
 		this.socket = socket;
         this.messages = messages;
+        this.id = id;
 
         try {
             this.setup();
         } catch (IOException e) {
             System.out.println("Player creating error");
         }
-        this.output.println(initializeData);
+
+    }
+
+    private void setup() throws IOException {
+        input = new Scanner(socket.getInputStream());
+        output = new PrintWriter(socket.getOutputStream(), true);
+        outputStream = new DataOutputStream(socket.getOutputStream());
+    }
+    public String getInitializationData (int playerID) {
+        String data;
+        JSONBoardConverter converter = new JSONBoardConverter();
+        String jsonBoard = converter.buildJSONBoard(game.getBoard());
+        data = playerID + "|" + jsonBoard;
+        return data;
     }
 
 	 @Override
@@ -62,10 +81,12 @@ public class Player implements Runnable {
          }
      }
 
-     private void setup() throws IOException {
-         input = new Scanner(socket.getInputStream());
-         output = new PrintWriter(socket.getOutputStream(), true);
-         outputStream = new DataOutputStream(socket.getOutputStream());
+     public void setGame(Game g){
+        this.game = g;
      }
+    public int getId(){
+        return id;
+    }
+
 
 }
