@@ -1,6 +1,8 @@
 package socketServer;
 
 import Board.*;
+import Game.Game;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ArrayList;
@@ -21,7 +23,8 @@ public class SocketServer
     public static List<Player> players;
 	int numberOfPlayers;
     int port;
-    Board board;
+    Game game;
+
     Vector<String> messages;
 	
   /**
@@ -37,9 +40,7 @@ public class SocketServer
     this.messages = new Vector<String>();
 	players = new ArrayList<>();
 
-    DefaultBoardBuilder boardBuilder = new DefaultBoardBuilder();
-    boardBuilder.initializeBoardFields();
-    this.board = boardBuilder.getDefaultBoard();
+
 
     try {
       server = new ServerSocket(port); 
@@ -65,7 +66,7 @@ public class SocketServer
           System.out.println("Player " + newPlayerId + " has connected.");
           newPlayerId++;
       }
-      //System.out.println("Connected players:" + players.size());
+      game = new Game(players);
   }
 
   /**
@@ -75,9 +76,6 @@ public class SocketServer
   protected void finalize() 
   {
     try {
-      //in.close();
-      //out.close();
-      //client.close();
       server.close();
     } 
     catch (IOException e) {
@@ -88,10 +86,8 @@ public class SocketServer
   private String getInitializationData (int playerID) {
       String data;
       JSONBoardConverter converter = new JSONBoardConverter();
-      String jsonBoard = converter.buildJSONBoard(this.board);
+      String jsonBoard = converter.buildJSONBoard(game.getBoard());
       data = playerID + "|" + jsonBoard;
       return data;
 }
-        
-    
 }

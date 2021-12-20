@@ -22,7 +22,7 @@ public class ApplicationWindow extends JFrame{
 	 * @param player player who runs this app*/
 	
     public ApplicationWindow(SocketClient player) {
-    	this.player = player; //potrzebne??
+    	this.player = player;
         this.playerColor = this.player.getPlayerColor();
         this.infoPanel = new PlayerInfoPanel(playerColor.toString());
 
