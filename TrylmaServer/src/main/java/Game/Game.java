@@ -55,16 +55,19 @@ public class Game //singleton
      public synchronized void move(int startMoveField, int endMoveField, int id) {
          if (id != currentPlayer) {
              throw new IllegalStateException("Not your turn");}
+         converter = new JSONBoardConverter();
          String boardBefore = converter.buildJSONBoard(board);
          board.fields.get(startMoveField).setCurrentPlayerColor(PlayerColor.NO_PLAYER);
          board.fields.get(endMoveField).setCurrentPlayerColor(PlayerColor.fromInteger(id));
-         String updatedBoard;
 
+         converter = new JSONBoardConverter();
+         String updatedBoard;
          updatedBoard = "UPDATEBOARD|" + converter.buildJSONBoard(board);
+
          //updatedBoard = converter.buildJSONBoard(board);
-         //System.out.println("board Befor " + boardBefore);
-         //System.out.println("board update " + updatedBoard);
-         //System.out.println("Porownanie " + boardBefore.equals(updatedBoard));
+         System.out.println("board Befor " + boardBefore);
+         System.out.println("board update " + updatedBoard);
+         System.out.println("Porownanie " + boardBefore.equals(updatedBoard));
          sendToPlayers(updatedBoard);
          //sprawdzenie czy jego ruch jest poprawny - w odpowiedniej odległości, nie jest zajęte itp
          //uaktualnienie planszy w serwerze

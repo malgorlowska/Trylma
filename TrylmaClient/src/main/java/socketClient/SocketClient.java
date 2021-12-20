@@ -104,14 +104,7 @@ public class SocketClient
                 setBoard(message.split("[|]")[1]);
                 //board.repaint();
 
-
                 application.board = (DefaultBoard) this.board;
-
-                for(BoardField field : application.board.fields)
-                {
-                    field.setCurrentStatusColor(StatusColor.RED);
-                }
-
                 application.repaint();
                 application.board.repaint();
             }
