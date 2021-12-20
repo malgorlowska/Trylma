@@ -30,7 +30,7 @@ public class TrylmaServer
         }
     	
     	try {
-        numberOfPlayers = Integer.parseInt(args[1]);
+        	numberOfPlayers = Integer.parseInt(args[1]);
     	}
     	catch (NumberFormatException ex){
             ex.printStackTrace();

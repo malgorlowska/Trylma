@@ -20,7 +20,6 @@ import java.util.concurrent.Executors;
  */
 public class Game //singleton
 {
-
 	int playersCount;
 	int currentPlayer;
     public static List<Player> players;
@@ -34,8 +33,9 @@ public class Game //singleton
     this.rules = new TrylmaRules();
     DefaultBoardBuilder boardBuilder = new DefaultBoardBuilder();
     boardBuilder.initializeBoardFields();
+    boardBuilder.assignFields(playersCount);
     this.board = boardBuilder.getDefaultBoard();
-        for (Player player:players) {
+        for (Player player : players) {
             player.setGame(this);
             player.sendMessage(getInitializationData(player.getId()));
         }
@@ -48,7 +48,9 @@ public class Game //singleton
         data = playerID + "|" + jsonBoard;
         return data;
     }
- /*public synchronized void showMessage(int player) {
+
+    /*
+        public synchronized void showMessage(int player) {
         if (player != currentPlayer) {
             throw new IllegalStateException("Not your turn");
         } else if (player.opponent == null) {
@@ -58,7 +60,7 @@ public class Game //singleton
         }
     }*/
 
-     public synchronized void move(String command, int id) {
+     public synchronized void move (String command, int id) {
          //sprawdzenie czy klieny jest aktualnym graczem
          //sprawdzenie czy jego ruch jest poprawny
          //uaktualnienie planszy w serwerze
@@ -66,7 +68,7 @@ public class Game //singleton
          //przesłanie do wszystkich uaktualnionej planszy
      }
 
-    public Board getBoard(){
+    public Board getBoard() {
         return board;
     }
 

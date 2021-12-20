@@ -13,6 +13,7 @@ public class PlayerInfoPanel extends JPanel {
 
     public PlayerInfoPanel(String playerColor) {
         this.setOpaque(true);
+        this.setBorder(BorderFactory.createEtchedBorder());
         this.descriptionPlayer = new JLabel("       YOU ARE PLAYING WITH :");
         this.descriptionPlayer.setForeground(Color.WHITE);
 

@@ -11,10 +11,6 @@ public class BoardField extends Ellipse2D.Double {
     private int row;
     private int column;
 
-    public BoardField(int x, int y) {
-        this.setFrame(x, y, 25, 20);
-    }
-
     public BoardField(int row, int column, double xPosition, double yPosition,
                       int playerColorID, int statusColorID){
 

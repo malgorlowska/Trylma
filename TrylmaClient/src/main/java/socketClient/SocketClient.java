@@ -103,5 +103,6 @@ public class SocketClient
         e.printStackTrace();
     }
     this.board = builder.getDefaultBoard();
+    this.board.setPlayer(this);
 }
 }

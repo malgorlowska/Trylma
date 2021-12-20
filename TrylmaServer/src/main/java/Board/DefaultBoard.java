@@ -13,4 +13,9 @@ public class DefaultBoard extends Board {
         this.fields = fields;
     }
 
+    @Override
+    void setStartFields() {
+        this.startFields = new DefaultStartFields(this);
+    }
+
 }

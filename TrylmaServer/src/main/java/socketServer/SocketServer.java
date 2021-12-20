@@ -67,7 +67,6 @@ public class SocketServer
           newPlayerId++;
       }
       game = new Game(players);
-
   }
 
   /**
