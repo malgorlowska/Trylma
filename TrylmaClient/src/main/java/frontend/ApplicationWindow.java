@@ -1,12 +1,8 @@
 package frontend;
 
 import javax.swing.JFrame;
-
-import board.BoardBuilder;
-import board.DefaultBoardBuilder;
 import board.PlayerColor;
 import socketClient.SocketClient;
-
 import java.awt.*;
 
 public class ApplicationWindow extends JFrame{

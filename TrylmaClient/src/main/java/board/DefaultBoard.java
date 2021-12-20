@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class DefaultBoard extends Board {
@@ -25,8 +24,9 @@ public class DefaultBoard extends Board {
                             && getPlayer().getPlayerColor() == field.getPlayerColor()) {
 
                         field.setCurrentStatusColor(StatusColor.RED);
-                        getPlayer().out.println(fields.indexOf(field));
-                        mouseFlag ++;
+                        getPlayer().out.println("MOVE|" + fields.indexOf(field));
+                        repaint();
+                        setMouseFlag(1);
                     }
                 }
                 if (getMouseFlag() == 1) {
@@ -36,14 +36,8 @@ public class DefaultBoard extends Board {
 
                             field.setCurrentStatusColor(StatusColor.RED);
                             getPlayer().out.println(fields.indexOf(field));
-                            String serverBoardUpdate = "";
-                            try {
-                                serverBoardUpdate = getPlayer().in.readLine();
-                            } catch (IOException ex) {
-                                ex.printStackTrace();
-                            }
-                            getPlayer().setBoard(serverBoardUpdate);
-                            resetMouseFlag();
+                            repaint();
+                            setMouseFlag(0);
                         }
                     }
                 }
@@ -60,7 +54,7 @@ public class DefaultBoard extends Board {
         return mouseFlag;
     }
 
-    public void resetMouseFlag() {
-        this.mouseFlag = 0;
+    public void setMouseFlag(int i) {
+        this.mouseFlag = i;
     }
 }

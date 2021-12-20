@@ -1,6 +1,6 @@
 package Game;
 
-public class TrylmaRules implements Rules{
+public class TrylmaRules implements Rules {
     @Override
     public boolean isWinner() {
         return false;

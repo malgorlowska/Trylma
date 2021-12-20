@@ -4,7 +4,6 @@ import socketClient.SocketClient;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.Socket;
 import java.util.ArrayList;
 
 public abstract class Board extends JPanel {
@@ -26,7 +25,7 @@ public abstract class Board extends JPanel {
 
     abstract void setFields(ArrayList<BoardField> fields);
 
-    public void setPlayer(SocketClient client) {
+    public void setPlayer(SocketClient player) {
         this.player = player;
     }
 

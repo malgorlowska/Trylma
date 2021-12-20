@@ -11,6 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 
 /**
  * Hello world!
@@ -27,7 +28,7 @@ public class SocketClient
     public DataInputStream input = null;
     public ObjectInputStream objectInput = null;
     
-    int port = 0;
+    int port;
     
     /** Basic constructor. */
     public SocketClient(int port) {
@@ -71,7 +72,7 @@ public class SocketClient
         }
          catch  (IOException e) {
            System.out.println("No I/O"); System.exit(1);
-           System.out.println(e.getStackTrace());
+           System.out.println(Arrays.toString(e.getStackTrace()));
         }
     }
 

@@ -28,16 +28,6 @@ public class DefaultBoardBuilder implements BoardBuilder {
         this.board.setFields(fields);
     }
 
-    @Override
-    public void assignFields(int numberOfPlayers) {
-
-    }
-
-    @Override
-    public void addMouseListener() {
-
-    }
-
     public DefaultBoard getDefaultBoard(){
         return this.board;
     }

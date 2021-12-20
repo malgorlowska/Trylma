@@ -1,7 +1,5 @@
 package Board;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 
     public abstract class Board {
