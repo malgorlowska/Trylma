@@ -16,13 +16,20 @@ public enum PlayerColor {
     }
     public static PlayerColor fromInteger(int x) {
         switch(x) {
-            case 1 -> { return BLUE; }
-            case 2 -> { return ORANGE; }
-            case 3 -> { return PINK; }
-            case 4 -> { return PURPLE; }
-            case 5 -> { return BLACK; }
-            case 6 -> { return WHITE; }
-            default -> { return NO_PLAYER; }
+            case 1:
+                return BLUE;
+            case 2:
+                return ORANGE;
+            case 3:
+                return PINK;
+            case 4:
+                return PURPLE;
+            case 5:
+                return BLACK;
+            case 6:
+                return WHITE;
+            default:
+                return NO_PLAYER;
         }
     }
 }

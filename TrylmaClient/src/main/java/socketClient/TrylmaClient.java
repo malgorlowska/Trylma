@@ -2,14 +2,15 @@ package socketClient;
 
 import frontend.ApplicationWindow;
 
+import java.io.IOException;
+
 /**
  * Hello world!
  *
  */
 public class TrylmaClient 
 {
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ) throws IOException {
     	if (args.length != 1) 
     	{
             System.err.println("Pass the server IP as command line argument.");
@@ -27,6 +28,8 @@ public class TrylmaClient
     	client.listenSocket();
 
     	ApplicationWindow application = new ApplicationWindow(client);
-    	application.setVisible(true);   	
+    	application.setVisible(true);
+
+		client.play();
     }
 }

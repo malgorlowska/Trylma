@@ -76,7 +76,8 @@ public class DefaultBoardBuilder implements BoardBuilder{
     @Override
     public void assignFields(int numberOfPlayers) {
         switch (numberOfPlayers) {
-            case 2 -> {
+            case 2:
+            {
                 for (BoardField field : this.board.startFields.topFields) {
                     field.setCurrentPlayerColor(PlayerColor.BLUE);
                 }
@@ -85,7 +86,8 @@ public class DefaultBoardBuilder implements BoardBuilder{
                 }
             }
 
-            case 3 -> {
+            case 3:
+            {
                 for (BoardField field : this.board.startFields.topLeftFields) {
                     field.setCurrentPlayerColor(PlayerColor.BLUE);
                 }
@@ -97,7 +99,8 @@ public class DefaultBoardBuilder implements BoardBuilder{
                 }
             }
 
-            case 4 -> {
+            case 4:
+            {
                 for (BoardField field : this.board.startFields.topLeftFields) {
                     field.setCurrentPlayerColor(PlayerColor.BLUE);
                 }
@@ -112,7 +115,8 @@ public class DefaultBoardBuilder implements BoardBuilder{
                 }
             }
 
-            case 6 -> {
+            case 6:
+            {
                 for (BoardField field : this.board.startFields.topFields) {
                     field.setCurrentPlayerColor(PlayerColor.BLUE);
                 }

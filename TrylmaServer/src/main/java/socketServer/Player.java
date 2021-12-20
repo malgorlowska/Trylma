@@ -1,17 +1,13 @@
 package socketServer;
 
-import Board.JSONBoardConverter;
 import Game.Game;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 import java.util.Vector;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * 
@@ -63,6 +59,7 @@ public class Player implements Runnable {
                      System.out.println("player " + id + "is trying to move");
                      messages.add(message);//zbędne
                      moveCommand(message.split("[|]")[1]);//Integer.parseInt(command.substring(5)));
+                     game.sendToPlayers(message.split("[|]")[1]);
                  }
 
                 /*else if(command.equals("GET")) {

@@ -76,6 +76,18 @@ public class SocketClient
         }
     }
 
+    public void play() throws IOException {
+        String message;
+        while(!in.readLine().equals("")){
+            message = in.readLine();
+            if(message.split("[|]")[0].equals("MOVE"))
+            {
+                //uaktualnij plansze
+                //board.repaint(); ???
+            }
+        }
+    }
+
     public int getPlayerId() {
         return playerId;
     }
@@ -106,4 +118,6 @@ public class SocketClient
     this.board = builder.getDefaultBoard();
     this.board.setPlayer(this);
 }
+
+
 }

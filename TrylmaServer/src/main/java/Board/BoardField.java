@@ -34,13 +34,20 @@ public class BoardField {
     public void setCurrentPlayerColor(PlayerColor playerColor) {
         this.playerColor = playerColor;
         switch (playerColor) {
-            case BLUE -> this.currentPlayerColor  = Color.CYAN;
-            case ORANGE -> this.currentPlayerColor = Color.ORANGE;
-            case PINK -> this.currentPlayerColor = Color.PINK;
-            case PURPLE -> this.currentPlayerColor = Color.MAGENTA;
-            case BLACK -> this.currentPlayerColor = Color.BLACK;
-            case WHITE -> this.currentPlayerColor = Color.WHITE;
-            case NO_PLAYER -> this.currentPlayerColor = Color.GRAY;
+            case BLUE:
+                this.currentPlayerColor  = Color.CYAN;
+            case ORANGE:
+                this.currentPlayerColor = Color.ORANGE;
+            case PINK:
+                this.currentPlayerColor = Color.PINK;
+            case PURPLE:
+                this.currentPlayerColor = Color.MAGENTA;
+            case BLACK:
+                this.currentPlayerColor = Color.BLACK;
+            case WHITE:
+                this.currentPlayerColor = Color.WHITE;
+            case NO_PLAYER:
+                this.currentPlayerColor = Color.GRAY;
         }
     }
 
