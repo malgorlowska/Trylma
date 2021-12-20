@@ -31,6 +31,7 @@ public class SocketClient
     public DataInputStream input = null;
     public ObjectInputStream objectInput = null;
     ApplicationWindow application = null;
+    DefaultBoardBuilder builder = null;
     
     int port;
     
@@ -70,6 +71,7 @@ public class SocketClient
           String[] receivedData = in.readLine().split("[|]");
           setPlayerId(Integer.parseInt(receivedData[0]));
           setPlayerColor(PlayerColor.fromInteger(getPlayerId()));
+          builder = new DefaultBoardBuilder();
           setBoard(receivedData[1]);
           scanner = new Scanner(socket.getInputStream());
           this.board.setPlayer(this);
@@ -101,6 +103,16 @@ public class SocketClient
                 System.out.println(message.split("[|]")[1]);
                 setBoard(message.split("[|]")[1]);
                 //board.repaint();
+
+
+                application.board = (DefaultBoard) this.board;
+
+                for(BoardField field : application.board.fields)
+                {
+                    field.setCurrentStatusColor(StatusColor.RED);
+                }
+
+                application.repaint();
                 application.board.repaint();
             }
         }
@@ -127,15 +139,12 @@ public class SocketClient
     }
 
     public void setBoard (String jsonBoard) {
-    DefaultBoardBuilder builder = new DefaultBoardBuilder();
     try {
         builder.setBoardFields(jsonBoard);
     } catch (JSONException e) {
         e.printStackTrace();
     }
     this.board = builder.getDefaultBoard();
-    //
+
 }
-
-
 }
