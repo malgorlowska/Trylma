@@ -24,7 +24,7 @@ public class DefaultBoard extends Board {
                             && getPlayer().getPlayerColor() == field.getPlayerColor()) {
 
                         field.setCurrentStatusColor(StatusColor.RED);
-                        getPlayer().out.println("MOVE|" + fields.indexOf(field));
+                        getPlayer().out.println("CURRENTFIELD|" + fields.indexOf(field));
                         repaint();
                         setMouseFlag(1);
                     }
@@ -32,10 +32,10 @@ public class DefaultBoard extends Board {
                 if (getMouseFlag() == 1) {
                     for (BoardField field : fields) {
                         if (field.isHit(e.getX(),e.getY())
-                                && getPlayer().getPlayerColor() == PlayerColor.NO_PLAYER) {
+                                && field.getPlayerColor() == PlayerColor.NO_PLAYER) {
 
                             field.setCurrentStatusColor(StatusColor.RED);
-                            getPlayer().out.println(fields.indexOf(field));
+                            getPlayer().out.println("MOVE|" + fields.indexOf(field));
                             repaint();
                             setMouseFlag(0);
                         }

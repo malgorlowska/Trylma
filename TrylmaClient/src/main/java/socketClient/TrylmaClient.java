@@ -27,8 +27,7 @@ public class TrylmaClient
     	SocketClient client = new SocketClient(port);
     	client.listenSocket();
 
-    	ApplicationWindow application = new ApplicationWindow(client);
-    	application.setVisible(true);
+
 
 		client.play();
     }

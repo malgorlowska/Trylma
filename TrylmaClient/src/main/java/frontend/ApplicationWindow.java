@@ -1,6 +1,8 @@
 package frontend;
 
 import javax.swing.JFrame;
+
+import board.DefaultBoard;
 import board.PlayerColor;
 import socketClient.SocketClient;
 import java.awt.*;
@@ -13,6 +15,7 @@ public class ApplicationWindow extends JFrame{
 	SocketClient player; //potrzebne??
     PlayerInfoPanel infoPanel;
     PlayerColor playerColor;
+    public DefaultBoard board;
 
 	/** Basic constructor. 
 	 * @param player player who runs this app*/
@@ -21,10 +24,10 @@ public class ApplicationWindow extends JFrame{
     	this.player = player;
         this.playerColor = this.player.getPlayerColor();
         this.infoPanel = new PlayerInfoPanel(playerColor.toString());
-
+        this.board = (DefaultBoard)player.getBoard();
         this.setLayout(new BorderLayout());
         this.add(infoPanel, BorderLayout.WEST);
-        this.add(player.getBoard(), BorderLayout.CENTER);
+        this.add(board, BorderLayout.CENTER);
 
 
         int width = 800;

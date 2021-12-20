@@ -1,6 +1,7 @@
 package Game;
 
 import Board.Board;
+import Board.PlayerColor;
 import Board.DefaultBoardBuilder;
 import socketServer.Player;
 import Board.JSONBoardConverter;
@@ -20,17 +21,20 @@ import java.util.concurrent.Executors;
  */
 public class Game //singleton
 {
-	int playersCount;
+
+    int playersCount;
 	int currentPlayer;
     public static List<Player> players;
     TrylmaRules rules;
     Board board;
+    JSONBoardConverter converter;
 
 	public Game(List<Player> players) {
 	this.players = players;
     this.playersCount = players.size();
     this.rules = new TrylmaRules();
     currentPlayer = 1;
+    converter = new JSONBoardConverter();
     DefaultBoardBuilder boardBuilder = new DefaultBoardBuilder();
     boardBuilder.initializeBoardFields();
     boardBuilder.assignFields(playersCount);
@@ -43,16 +47,22 @@ public class Game //singleton
 
     public String getInitializationData (int playerID) {
         String data;
-        JSONBoardConverter converter = new JSONBoardConverter();
         String jsonBoard = converter.buildJSONBoard(board);
         data = playerID + "|" + jsonBoard;
         return data;
     }
 
-     public synchronized void move(String command, int id) {
+     public synchronized void move(int startMoveField, int endMoveField, int id) {
          if (id != currentPlayer) {
              throw new IllegalStateException("Not your turn");}
-         //uaktualnienie planszy w serwerze
+         String boardBefore = converter.buildJSONBoard(board);
+         board.fields.get(startMoveField).setCurrentPlayerColor(PlayerColor.NO_PLAYER);
+         board.fields.get(endMoveField).setCurrentPlayerColor(PlayerColor.fromInteger(id));
+         String updatedBoard;
+         updatedBoard = "UPDATEBOARD|" + converter.buildJSONBoard(board);
+         //updatedBoard = converter.buildJSONBoard(board);
+         System.out.println("Porownanie " + boardBefore.equals(updatedBoard));
+         sendToPlayers(updatedBoard);
          //sprawdzenie czy jego ruch jest poprawny - w odpowiedniej odległości, nie jest zajęte itp
          //uaktualnienie planszy w serwerze
          //sprawdzenie czy nie wygrał
@@ -65,6 +75,10 @@ public class Game //singleton
 
     public Board getBoard() {
         return board;
+    }
+
+    public TrylmaRules getRules() {
+        return rules;
     }
 
     public void sendToPlayers(String message){

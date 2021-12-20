@@ -1,6 +1,7 @@
 package socketServer;
 
 import Game.Game;
+import Board.PlayerColor;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -20,6 +21,7 @@ public class Player implements Runnable {
 	public PrintWriter output;
     int id;
     Game game;
+    int startMoveField;
     Vector<String> messages; //zbędne
 	
 	public Player(Socket socket, int id, Vector<String> messages) {
@@ -55,11 +57,16 @@ public class Player implements Runnable {
                      messages.add(message);//zbędne
                      return;
                  }
+                 else if (command.equals("CURRENTFIELD")) {
+                     System.out.println("player " + id + " current field");
+                     game.getRules().setAvailableFields(Integer.parseInt(message.split("[|]")[1]));//do implementacji
+                     startMoveField = Integer.parseInt(message.split("[|]")[1]);
+                 }
                  else if (command.equals("MOVE")) {
                      System.out.println("player " + id + "is trying to move");
                      messages.add(message);//zbędne
-                     moveCommand(message.split("[|]")[1]);//Integer.parseInt(command.substring(5)));
-                     game.sendToPlayers(message.split("[|]")[1]);
+                     moveCommand(startMoveField, Integer.parseInt(message.split("[|]")[1]));//Integer.parseInt(command.substring(5)));
+                     //game.sendToPlayers(message.split("[|]")[1]);
                  }
 
                 /*else if(command.equals("GET")) {
@@ -78,9 +85,9 @@ public class Player implements Runnable {
          }
      }
 
-     private void moveCommand(String command)
+     private void moveCommand(int startMoveField, int endMoveField)
      {
-         game.move(command, id);
+         game.move(startMoveField, endMoveField, id);
      }
 
      public void setGame(Game g){
