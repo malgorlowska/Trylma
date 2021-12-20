@@ -44,13 +44,7 @@ public class Player implements Runnable {
         output = new PrintWriter(socket.getOutputStream(), true);
         outputStream = new DataOutputStream(socket.getOutputStream());
     }
-    public String getInitializationData (int playerID) {
-        String data;
-        JSONBoardConverter converter = new JSONBoardConverter();
-        String jsonBoard = converter.buildJSONBoard(game.getBoard());
-        data = playerID + "|" + jsonBoard;
-        return data;
-    }
+
 
 	 @Override
      public void run() {
@@ -89,4 +83,8 @@ public class Player implements Runnable {
     }
 
 
+    public void sendMessage(String message) {
+        System.out.println("probuje wyslac wiadomosc: " + message);
+        output.println(message);
+    }
 }

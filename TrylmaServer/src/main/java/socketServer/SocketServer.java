@@ -67,8 +67,7 @@ public class SocketServer
           newPlayerId++;
       }
       game = new Game(players);
-      for(Player player:players)
-          player.output.println(player.getInitializationData(player.getId()));
+
   }
 
   /**
