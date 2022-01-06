@@ -1,33 +1,30 @@
 package socketServer;
 
 import Game.Game;
-import Board.PlayerColor;
-
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
-import java.util.Vector;
+
 
 /**
  * 
  *
  */
 public class Player implements Runnable {
-	Socket socket;
+    Game game;
+    Socket socket;
 	Scanner input;
 	DataOutputStream outputStream;
 	public PrintWriter output;
-    int id;
-    Game game;
+    int playerId;
     int startMoveField;
-    Vector<String> messages; //zbędne
+    int endMoveField;
 	
-	public Player(Socket socket, int id, Vector<String> messages) {
+	public Player(Socket socket, int playerId) {
 		this.socket = socket;
-        this.messages = messages;
-        this.id = id;
+        this.playerId = playerId;
 
         try {
             this.setup();
@@ -49,30 +46,23 @@ public class Player implements Runnable {
          try {
              while (input.hasNextLine()) {
                  String message = input.nextLine();
-                 System.out.println("Received message" + message + " from socket: " + socket);
                  String command = message.split("[|]")[0];
-                 System.out.println("Read command: " + command);
+                 String receivedData = message.split("[|]")[1];
+
                  if (command.equals("QUIT")) {
-                     System.out.println(id + "has left the game");
-                     messages.add(message);//zbędne
+                     System.out.println(playerId + "has left the game");
                      return;
                  }
-                 else if (command.equals("CURRENTFIELD")) {
-                     System.out.println("player " + id + " current field");
-                     game.getRules().setAvailableFields(this.game.getBoard(), Integer.parseInt(message.split("[|]")[1]));//do implementacji
-                     startMoveField = Integer.parseInt(message.split("[|]")[1]);
+                 else if (command.equals("CHOSEN_FIELD")) {
+                     System.out.println("player " + playerId + " current field");
+                     startMoveField = Integer.parseInt(receivedData);
+                     game.showPossibilities(startMoveField, playerId);
                  }
                  else if (command.equals("MOVE")) {
-                     System.out.println("player " + id + "is trying to move");
-                     messages.add(message);//zbędne
-                     moveCommand(startMoveField, Integer.parseInt(message.split("[|]")[1]));//Integer.parseInt(command.substring(5)));
-                     //game.sendToPlayers(message.split("[|]")[1]);
+                     System.out.println("player " + playerId + "is trying to move");
+                     endMoveField = Integer.parseInt(receivedData);
+                     game.move(startMoveField, endMoveField, playerId);
                  }
-
-                /*else if(command.equals("GET")) {
-                     System.out.println("Sending back all messages");
-                     output.println(messages);
-                 }*/
 
              }
          } catch (Exception e) {
@@ -81,25 +71,22 @@ public class Player implements Runnable {
              try {
                  socket.close();
              } catch (IOException e) {
+                 System.out.println("error in Player");
              }
          }
      }
 
-     private void moveCommand(int startMoveField, int endMoveField)
-     {
-         game.move(startMoveField, endMoveField, id);
+
+     public void setGame(Game game) {
+        this.game = game;
      }
 
-     public void setGame(Game g){
-        this.game = g;
-     }
-
-    public int getId(){
-        return id;
+    public int getPlayerId() {
+        return playerId;
     }
 
     public void sendMessage(String message) {
-        System.out.println("probuje wyslac wiadomosc: " + message);
+        System.out.println("trying to sent message: " + message);
         output.println(message);
     }
 }

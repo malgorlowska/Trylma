@@ -24,7 +24,7 @@ public class DefaultBoard extends Board {
                             && getPlayer().getPlayerColor() == field.getPlayerColor()) {
 
                         field.setCurrentStatusColor(StatusColor.RED);
-                        getPlayer().out.println("CURRENTFIELD|" + fields.indexOf(field));
+                        getPlayer().out.println("CHOSEN_FIELD|" + fields.indexOf(field));
                         repaint();
                         setMouseFlag(1);
                     }

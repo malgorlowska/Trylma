@@ -8,18 +8,17 @@ import socketClient.SocketClient;
 import java.awt.*;
 
 public class ApplicationWindow extends JFrame{
-	
-	//JPanel buttonPanel;
-	//ButtonsBox theBox;
 
 	SocketClient player;
     PlayerInfoPanel infoPanel;
     PlayerColor playerColor;
     public DefaultBoard board;
 
-	/** Basic constructor. 
-	 * @param player player who runs this app*/
-	
+	/**
+     *  Basic constructor.
+	 * @param player player who runs this app
+     *
+     * */
     public ApplicationWindow(SocketClient player) {
     	this.player = player;
         this.playerColor = this.player.getPlayerColor();
@@ -35,12 +34,11 @@ public class ApplicationWindow extends JFrame{
         this.setSize(width, height);
         this.setTitle("Trylma");       
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        //buttonPanel = new JPanel();
-        //theBox = new ButtonsBox(this);
-        
-        //buttonPanel.add(theBox);
-        //this.add(buttonPanel, BorderLayout.SOUTH);
+    }
+
+    public void setCurrPlayer(int currPlayerID) {
+        String player = "       " + PlayerColor.fromInteger(currPlayerID).toString();
+        this.infoPanel.currentPlayerInfo.setText(player);
     }
 
 }

@@ -17,27 +17,22 @@ import java.util.concurrent.Executors;
  * @author Małgorzata Orłowska
  * @see socketServer.TrylmaServer
  */
-public class SocketServer
-{
+public class SocketServer {
 	ServerSocket server = null;
-    public static List<Player> players;
+    Game game;
 	int numberOfPlayers;
     int port;
-    Game game;
-
-    Vector<String> messages;
+    public static List<Player> players;
 	
   /**
    * Basic constructor.
  * @param numberOfPlayers 
  * @param port 
    */
-  SocketServer(int port, int numberOfPlayers)
-  { 
+  SocketServer(int port, int numberOfPlayers) {
 	System.out.println("Server");
 	this.numberOfPlayers = numberOfPlayers;
     this.port = port;
-    this.messages = new Vector<String>();
 	players = new ArrayList<>();
 
     try {
@@ -45,7 +40,8 @@ public class SocketServer
       System.out.println("The server is running.");
     } 
     catch (IOException e) {
-      System.out.println("Could not listen on port " + port); System.exit(-1);
+      System.out.println("Could not listen on port " + port);
+      System.exit(-1);
     }
   }
 
@@ -58,7 +54,7 @@ public class SocketServer
 
       int newPlayerId = 1;
       while (players.size() < numberOfPlayers) {
-          Player player = new Player(server.accept(), newPlayerId, this.messages);
+          Player player = new Player(server.accept(), newPlayerId);
           players.add(player);
           executors.execute(player);
           System.out.println("Player " + newPlayerId + " has connected.");

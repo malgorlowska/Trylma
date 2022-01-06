@@ -1,7 +1,6 @@
 package Board;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 
 public class BoardField {
     private Color currentPlayerColor;
