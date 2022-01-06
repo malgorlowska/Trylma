@@ -193,9 +193,12 @@ public class TrylmaRules implements Rules {
     @Override
     public void setAvailableFields(Board board, int startMoveField, boolean isFirstCheck) {
         BoardField startField = board.fields.get(startMoveField);
+        System.out.println("szukam dostepnych pol dla [wiersz,columna] " + startField.getRow() +" " +startField.getColumn());
         ArrayList<BoardField> neighbors = this.neighbors(board, startField);
 
+
         for (BoardField field : neighbors) {
+
             if (field.getPlayerColor() == PlayerColor.NO_PLAYER && isFirstCheck){
 
                 this.availableFields.add(board.fields.indexOf(field));
@@ -211,24 +214,24 @@ public class TrylmaRules implements Rules {
         ArrayList<BoardField> neighbors = new ArrayList<>();
         int currRow = currField.getRow();
         int currColumn = currField.getColumn();
-
+        System.out.println("Szukam sasiadow wiersz, kolumna " + currRow + " " + currColumn);
         for (BoardField field : board.fields) {
             int row = field.getRow();
             int column = field.getColumn();
 
             if ((row == currRow) && ((column == currColumn + 1) || (column == currColumn - 1))) {
-
+                System.out.println("sasiadem jest wiersz, kolumna " + row + " " + column );
                 neighbors.add(field);
             }
 
-            if (row % 2 == 0) {
-                if (((row == currRow - 1) || (row == currRow + 1)) && (column == currColumn - 1)) {
-
+            if (currRow % 2 == 0) {
+                if (((row == currRow - 1) || (row == currRow + 1)) && ((column == currColumn - 1) || (column == currColumn))) {
+                    System.out.println("sasiadem jest wiersz, kolumna " + row + " " + column );
                     neighbors.add(field);
                 }
-            } else if (row % 2 == 1) {
-                if (((row == currRow - 1) || (row == currRow + 1)) && (column == currColumn + 1)) {
-
+            } else if (currRow % 2 == 1) {
+                if (((row == currRow - 1) || (row == currRow + 1)) && ((column == currColumn + 1) || (column == currColumn))) {
+                    System.out.println("sasiadem jest wiersz, kolumna " + row + " " + column );
                     neighbors.add(field);
                 }
             }
