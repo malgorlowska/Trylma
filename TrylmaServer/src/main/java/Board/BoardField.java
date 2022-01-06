@@ -70,6 +70,9 @@ public class BoardField {
             case GREEN:
                 this.currentStatusColor = Color.GREEN;
                 break;
+            case POSSIBLE_MOVE:
+                this.currentStatusColor = new Color(6, 100, 43);
+                break;
         }
     }
 

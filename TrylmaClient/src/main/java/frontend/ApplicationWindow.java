@@ -2,32 +2,36 @@ package frontend;
 
 import javax.swing.JFrame;
 
-import board.DefaultBoard;
-import board.PlayerColor;
-import socketClient.SocketClient;
+import board.*;
+import org.json.JSONException;
 import java.awt.*;
 
 public class ApplicationWindow extends JFrame{
 
-	SocketClient player;
+    int playerID;
+    DefaultBoardBuilder builder;
     PlayerInfoPanel infoPanel;
     PlayerColor playerColor;
     public DefaultBoard board;
 
 	/**
      *  Basic constructor.
-	 * @param player player who runs this app
+	 * @param playerID player who runs this app
      *
      * */
-    public ApplicationWindow(SocketClient player) {
-    	this.player = player;
-        this.playerColor = this.player.getPlayerColor();
+    public ApplicationWindow(int playerID, int currentPlayerID, String JSONBoard) {
+    	this.playerID = playerID;
+        this.playerColor = PlayerColor.fromInteger(playerID);
         this.infoPanel = new PlayerInfoPanel(playerColor.toString());
-        this.board = (DefaultBoard)player.getBoard();
+
+        this.builder = new DefaultBoardBuilder();
+        this.setBoard(JSONBoard);
+
+        this.setCurrPlayer(currentPlayerID);
+
         this.setLayout(new BorderLayout());
         this.add(infoPanel, BorderLayout.WEST);
         this.add(board, BorderLayout.CENTER);
-
 
         int width = 800;
         int height = 600;
@@ -39,6 +43,20 @@ public class ApplicationWindow extends JFrame{
     public void setCurrPlayer(int currPlayerID) {
         String player = "       " + PlayerColor.fromInteger(currPlayerID).toString();
         this.infoPanel.currentPlayerInfo.setText(player);
+        this.infoPanel.repaint();
+    }
+
+    public Board getBoard () {
+        return this.board;
+    }
+
+    public void setBoard (String jsonBoard) {
+        try {
+            builder.setBoardFields(jsonBoard);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        this.board = builder.getDefaultBoard();
     }
 
 }

@@ -36,7 +36,7 @@ public class Game {
 
     public String getInitializationData (int playerID) {
         String jsonBoard = converter.buildJSONBoard(board);
-        return playerID + "|" + jsonBoard;
+        return playerID + "|" + jsonBoard + "|" + currentPlayer;
     }
 
      public synchronized void move(int startMoveField, int endMoveField, int playerId) {
@@ -50,13 +50,18 @@ public class Game {
              board.fields.get(endMoveField).setCurrentPlayerColor(PlayerColor.fromInteger(playerId));
              this.resetFieldsStatus();
 
-             converter = new JSONBoardConverter();
-             String updatedBoard = "UPDATE_BOARD|" + converter.buildJSONBoard(board);
-             sendToPlayers(updatedBoard);
-
              // managing players queue
              currentPlayer = currentPlayer % playersCount + 1;
+
+             converter = new JSONBoardConverter();
+             String updatedBoard = "UPDATE_BOARD|" + converter.buildJSONBoard(board) + "|" + currentPlayer;
+             sendToPlayers(updatedBoard);
+
+
          }
+        if (this.getRules().isWinner(this.getBoard(), playerId)){
+            this.sendToPlayer(playerId, "YOU_WON");
+        }
 
          // TODO check if someone won the game
 
@@ -69,11 +74,11 @@ public class Game {
         this.getRules().setAvailableFields(this.getBoard(), startMoveField, true);
 
         for (int fieldID : this.getRules().getAvailableFields()) {
-            this.getBoard().fields.get(fieldID).setCurrentStatusColor(StatusColor.RED);
+            this.getBoard().fields.get(fieldID).setCurrentStatusColor(StatusColor.POSSIBLE_MOVE);
         }
 
         converter = new JSONBoardConverter();
-        String updatedBoard = "UPDATE_BOARD|" + converter.buildJSONBoard(board);
+        String updatedBoard = "UPDATE_BOARD|" + converter.buildJSONBoard(board) + "|" + playerId;
         sendToPlayer(playerId, updatedBoard);
     }
 

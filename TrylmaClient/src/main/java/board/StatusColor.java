@@ -1,8 +1,9 @@
 package board;
 
 public enum StatusColor {
+    RED(1),
     GREEN(2),
-    RED(1);
+    POSSIBLE_MOVE(3);
 
     public final int statusColorID;
 
@@ -14,6 +15,11 @@ public enum StatusColor {
         if (x == 1) {
             return RED;
         }
-        return GREEN;
+        else if (x == 2) {
+            return GREEN;
+        }
+        else {
+            return POSSIBLE_MOVE;
+        }
     }
 }

@@ -1,16 +1,16 @@
 package socketClient;
 
 import board.*;
-import org.json.JSONException;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
+
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Scanner;
+import frontend.ApplicationWindow;
 
 /**
  * Hello world!
@@ -19,22 +19,19 @@ import java.util.Scanner;
 public class SocketClient {
 	private int playerId;
     private PlayerColor playerColor;
-    private Board board;
     public PrintWriter out = null;
-    public BufferedReader in = null;
+    //public BufferedReader in = null;
     public Scanner scanner = null;
     public DataInputStream input = null;
-    DefaultBoardBuilder builder = null;
+    ApplicationWindow appWindow = null;
     Socket socket = null;
 
     int port;
     
     /** Basic constructor. */
     public SocketClient(int port) {
-
     	System.out.println("Client");
         this.port = port;
-
 	}
     
     /**
@@ -44,24 +41,25 @@ public class SocketClient {
         try {
           socket = new Socket("localhost", port);
           out = new PrintWriter(socket.getOutputStream(), true);
-          in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+          scanner = new Scanner(socket.getInputStream());
+         // in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
           input = new DataInputStream(socket.getInputStream());
 
-          String message = in.readLine();
-          String playerID = message.split("[|]")[0];
+          String message = scanner.nextLine();
           String JSONBoard = message.split("[|]")[1];
+          int playerID = Integer.parseInt(message.split("[|]")[0]);
+          int currentPlayerID = Integer.parseInt(message.split("[|]")[2]);
 
-          setPlayerId(Integer.parseInt(playerID));
+          setPlayerId(playerID);
           setPlayerColor(PlayerColor.fromInteger(getPlayerId()));
 
-          builder = new DefaultBoardBuilder();
-          setBoard(JSONBoard);
-          this.board.setPlayer(this);
-
-          scanner = new Scanner(socket.getInputStream());
+          this.appWindow = new ApplicationWindow(playerId, currentPlayerID, JSONBoard);
+          this.appWindow.getBoard().setPlayer(this);
 
           System.out.println("My id is " + getPlayerId());
           System.out.println("My color is " + getPlayerColor().toString());
+
+          this.appWindow.setVisible(true);
         }
         catch (UnknownHostException e) {
            System.out.println("Unknown host: localhost"); System.exit(1);
@@ -77,13 +75,23 @@ public class SocketClient {
 
         while(scanner.hasNextLine()) {
             message = scanner.nextLine();
+            System.out.println("I received a message : " + message);
             String command = message.split("[|]")[0];
 
             if (command.equals("UPDATE_BOARD")) {
                 System.out.println("updating the board ...");
                 String updatedBoard = message.split("[|]")[1];
-                setBoard(updatedBoard);
-                this.getBoard().repaint();
+                int currentPlayer = Integer.parseInt(message.split("[|]")[2]);
+
+                this.appWindow.setBoard(updatedBoard);
+                this.appWindow.setCurrPlayer(currentPlayer);
+
+                this.appWindow.repaint();
+                this.appWindow.getBoard().repaint();
+            }
+
+            if (command.equals("YOU_WON")){
+                System.out.println("you won the game");
             }
         }
     }
@@ -104,16 +112,4 @@ public class SocketClient {
         this.playerColor = playerColor;
     }
 
-    public Board getBoard () {
-        return this.board;
-    }
-
-    public void setBoard (String jsonBoard) {
-        try {
-            builder.setBoardFields(jsonBoard);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        this.board = builder.getDefaultBoard();
-    }
 }
