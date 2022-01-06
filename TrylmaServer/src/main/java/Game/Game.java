@@ -96,6 +96,7 @@ public class Game {
             player.sendMessage(message);
         }
     }
+
     public void sendToPlayer(int id, String message){
         for(Player player : players) {
             if (player.getPlayerId() == id) {

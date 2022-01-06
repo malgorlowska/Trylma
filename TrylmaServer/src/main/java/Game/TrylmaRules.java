@@ -23,9 +23,10 @@ public class TrylmaRules implements Rules {
 
         for (BoardField field : neighbors) {
             if (field.getPlayerColor() == PlayerColor.NO_PLAYER && isFirstCheck){
+
                 this.availableFields.add(board.fields.indexOf(field));
             }
-            else {
+            else if (field.getPlayerColor() != PlayerColor.NO_PLAYER) {
 
                 this.tryToJump(board, startField, field);
             }
