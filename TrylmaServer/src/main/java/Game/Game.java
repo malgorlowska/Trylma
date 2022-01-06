@@ -19,7 +19,7 @@ public class Game {
 	public Game(List<Player> players) {
         Game.players = players;
         this.playersCount = players.size();
-        this.rules = new TrylmaRules();
+        this.rules = new TrylmaRules(playersCount);
         this.currentPlayer = PlayerColor.BLUE.playerColorID;
         this.converter = new JSONBoardConverter();
 
