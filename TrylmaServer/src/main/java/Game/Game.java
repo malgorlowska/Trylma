@@ -32,7 +32,7 @@ public class Game //singleton
 	public Game(List<Player> players) {
 	this.players = players;
     this.playersCount = players.size();
-    this.rules = new TrylmaRules();
+    this.rules = new TrylmaRules(playersCount);
     currentPlayer = 1;
     converter = new JSONBoardConverter();
     DefaultBoardBuilder boardBuilder = new DefaultBoardBuilder();
