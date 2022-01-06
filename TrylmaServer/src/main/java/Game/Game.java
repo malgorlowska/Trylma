@@ -73,10 +73,10 @@ public class Game //singleton
          //uaktualnienie planszy w serwerze
          //sprawdzenie czy nie wygrał
          //przesłanie do wszystkich uaktualnionej planszy
-         if(currentPlayer == 1) //uwaga dziala tylko dla dwóch graczy -> do poprawy
-             currentPlayer = 2;
+         if((currentPlayer+1) % playersCount == 0)
+             currentPlayer = playersCount;
          else
-             currentPlayer =1;
+             currentPlayer=  (currentPlayer + 1) % playersCount;
      }
 
     public Board getBoard() {

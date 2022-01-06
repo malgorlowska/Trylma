@@ -26,9 +26,6 @@ public class TrylmaClient
     	
     	SocketClient client = new SocketClient(port);
     	client.listenSocket();
-
-
-
 		client.play();
     }
 }

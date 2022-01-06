@@ -12,7 +12,7 @@ public class ApplicationWindow extends JFrame{
 	//JPanel buttonPanel;
 	//ButtonsBox theBox;
 
-	SocketClient player; //potrzebne??
+	SocketClient player;
     PlayerInfoPanel infoPanel;
     PlayerColor playerColor;
     public DefaultBoard board;

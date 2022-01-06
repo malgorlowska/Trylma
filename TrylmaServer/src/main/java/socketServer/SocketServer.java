@@ -40,8 +40,6 @@ public class SocketServer
     this.messages = new Vector<String>();
 	players = new ArrayList<>();
 
-
-
     try {
       server = new ServerSocket(port); 
       System.out.println("The server is running.");
