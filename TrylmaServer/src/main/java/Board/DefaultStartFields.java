@@ -3,12 +3,12 @@ package Board;
 import java.util.ArrayList;
 
 public class DefaultStartFields {
-    ArrayList<BoardField> topFields = new ArrayList<>();
-    ArrayList<BoardField> topLeftFields = new ArrayList<>();
-    ArrayList<BoardField> topRightFields = new ArrayList<>();
-    ArrayList<BoardField> bottomFields = new ArrayList<>();
-    ArrayList<BoardField> bottomLeftFields = new ArrayList<>();
-    ArrayList<BoardField> bottomRightFields = new ArrayList<>();
+    public ArrayList<BoardField> topFields = new ArrayList<>();
+    public ArrayList<BoardField> topLeftFields = new ArrayList<>();
+    public ArrayList<BoardField> topRightFields = new ArrayList<>();
+    public ArrayList<BoardField> bottomFields = new ArrayList<>();
+    public ArrayList<BoardField> bottomLeftFields = new ArrayList<>();
+    public ArrayList<BoardField> bottomRightFields = new ArrayList<>();
 
 
     public DefaultStartFields (DefaultBoard board){
