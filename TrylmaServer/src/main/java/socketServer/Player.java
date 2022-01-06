@@ -59,7 +59,7 @@ public class Player implements Runnable {
                  }
                  else if (command.equals("CURRENTFIELD")) {
                      System.out.println("player " + id + " current field");
-                     game.getRules().setAvailableFields(Integer.parseInt(message.split("[|]")[1]));//do implementacji
+                     game.getRules().setAvailableFields(this.game.getBoard(), Integer.parseInt(message.split("[|]")[1]));//do implementacji
                      startMoveField = Integer.parseInt(message.split("[|]")[1]);
                  }
                  else if (command.equals("MOVE")) {
