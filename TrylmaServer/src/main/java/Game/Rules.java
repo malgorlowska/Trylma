@@ -8,5 +8,5 @@ public interface Rules {
 
     boolean moveIsCorrect(Board board, int endMoveField);
 
-    public void setAvailableFields(Board board, int startMoveField, boolean isFirstCheck);
+    public void setAvailableFields(Board board, BoardField startField, boolean isFirstCheck);
 }

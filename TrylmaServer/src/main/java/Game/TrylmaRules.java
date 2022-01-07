@@ -187,34 +187,39 @@ public class TrylmaRules implements Rules {
 
     @Override
     public boolean moveIsCorrect(Board board, int endMoveField) {
-        return availableFields.contains(board.fields.indexOf(endMoveField));
+        return availableFields.contains(endMoveField);
     }
 
     @Override
-    public void setAvailableFields(Board board, int startMoveField, boolean isFirstCheck) {
-        BoardField startField = board.fields.get(startMoveField);
-        System.out.println("szukam dostepnych pol dla [wiersz,columna] " + startField.getRow() +" " +startField.getColumn());
-        ArrayList<BoardField> neighbors = this.neighbors(board, startField);
+    public synchronized void setAvailableFields(Board board, BoardField currField, boolean isFirstCheck) {
+        ArrayList<BoardField> neighbors = this.findNeighbors(board, currField);
+        boolean wasChecked = false;
 
+        if (this.availableFields.contains(board.fields.indexOf(currField))) {
+            wasChecked = true;
+        }
+
+        if (!isFirstCheck) {
+            this.availableFields.add(board.fields.indexOf(currField));
+        }
 
         for (BoardField field : neighbors) {
-
             if (field.getPlayerColor() == PlayerColor.NO_PLAYER && isFirstCheck){
-
                 this.availableFields.add(board.fields.indexOf(field));
             }
             else if (field.getPlayerColor() != PlayerColor.NO_PLAYER) {
-
-                this.tryToJump(board, startField, field);
+                if (!wasChecked) {
+                    this.tryToJump(board, currField, field);
+                }
             }
         }
     }
 
-    public ArrayList<BoardField> neighbors(Board board, BoardField currField) {
+    public synchronized ArrayList<BoardField> findNeighbors(Board board, BoardField currField) {
         ArrayList<BoardField> neighbors = new ArrayList<>();
         int currRow = currField.getRow();
         int currColumn = currField.getColumn();
-        System.out.println("Szukam sasiadow wiersz, kolumna " + currRow + " " + currColumn);
+
         for (BoardField field : board.fields) {
             int row = field.getRow();
             int column = field.getColumn();
@@ -225,13 +230,16 @@ public class TrylmaRules implements Rules {
             }
 
             if (currRow % 2 == 0) {
-                if (((row == currRow - 1) || (row == currRow + 1)) && ((column == currColumn - 1) || (column == currColumn))) {
-                    System.out.println("sasiadem jest wiersz, kolumna " + row + " " + column );
+                if (((row == currRow - 1) || (row == currRow + 1))
+                        && ((column == currColumn - 1) || (column == currColumn))) {
+
                     neighbors.add(field);
                 }
-            } else if (currRow % 2 == 1) {
-                if (((row == currRow - 1) || (row == currRow + 1)) && ((column == currColumn + 1) || (column == currColumn))) {
-                    System.out.println("sasiadem jest wiersz, kolumna " + row + " " + column );
+            }
+            else if (currRow % 2 == 1) {
+                if (((row == currRow - 1) || (row == currRow + 1))
+                        && ((column == currColumn + 1) || (column == currColumn))) {
+
                     neighbors.add(field);
                 }
             }
@@ -239,16 +247,15 @@ public class TrylmaRules implements Rules {
         return neighbors;
     }
 
-    public void tryToJump(Board board, BoardField currField, BoardField fieldToPass) {
-        ArrayList<BoardField> passFieldNeighbors = this.neighbors(board, fieldToPass);
+    public synchronized void tryToJump(Board board, BoardField currField, BoardField fieldToPass) {
+        ArrayList<BoardField> passFieldNeighbors = this.findNeighbors(board, fieldToPass);
 
         if (currField.getRow() == fieldToPass.getRow()) {
             for (BoardField field_ : passFieldNeighbors) {
                 if (field_.getPlayerColor() == PlayerColor.NO_PLAYER) {
                     if (!field_.equals(currField) && field_.getRow() == currField.getRow()) {
 
-                        this.availableFields.add(board.fields.indexOf(field_));
-                        this.setAvailableFields(board, board.fields.indexOf(field_), false);
+                        this.setAvailableFields(board, field_, false);
                     }
                 }
             }
@@ -261,8 +268,7 @@ public class TrylmaRules implements Rules {
                             field_.getRow() != currField.getRow() &&
                             field_.getColumn() != currField.getColumn()) {
 
-                        this.availableFields.add(board.fields.indexOf(field_));
-                        this.setAvailableFields(board, board.fields.indexOf(field_), false);
+                        this.setAvailableFields(board, field_, false);
                     }
                 }
             }
@@ -272,4 +278,9 @@ public class TrylmaRules implements Rules {
     public ArrayList<Integer> getAvailableFields() {
         return this.availableFields;
     }
+
+    public void resetAvailableFields() {
+        this.availableFields.clear();
+    }
+
 }

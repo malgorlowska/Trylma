@@ -56,23 +56,27 @@ public class Game {
              converter = new JSONBoardConverter();
              String updatedBoard = "UPDATE_BOARD|" + converter.buildJSONBoard(board) + "|" + currentPlayer;
              sendToPlayers(updatedBoard);
-
-
          }
+         
         if (this.getRules().isWinner(this.getBoard(), playerId)){
             this.sendToPlayer(playerId, "YOU_WON");
+            System.out.println("Player " + playerId + "won the game");
         }
 
-         // TODO check if someone won the game
+        this.getRules().resetAvailableFields();
 
+         // TODO check if someone won the game
      }
 
     public synchronized void showPossibilities(int startMoveField, int playerId) {
         if (playerId != currentPlayer) {
             throw new IllegalStateException("Not your turn");
         }
-        this.getRules().setAvailableFields(this.getBoard(), startMoveField, true);
+        BoardField startField = this.getBoard().fields.get(startMoveField);
+        this.getRules().setAvailableFields(this.getBoard(), startField, true);
 
+
+        startField.setCurrentStatusColor(StatusColor.RED);
         for (int fieldID : this.getRules().getAvailableFields()) {
             this.getBoard().fields.get(fieldID).setCurrentStatusColor(StatusColor.POSSIBLE_MOVE);
         }
@@ -86,14 +90,6 @@ public class Game {
         for (BoardField field : this.getBoard().fields) {
             field.setCurrentStatusColor(StatusColor.GREEN);
         }
-    }
-
-    public Board getBoard() {
-        return board;
-    }
-
-    public TrylmaRules getRules() {
-        return rules;
     }
 
     public void sendToPlayers(String message){
@@ -110,4 +106,11 @@ public class Game {
         }
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
+    public TrylmaRules getRules() {
+        return rules;
+    }
 }
