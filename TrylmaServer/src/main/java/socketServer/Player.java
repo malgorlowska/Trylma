@@ -49,25 +49,34 @@ public class Player implements Runnable {
                  String command = message.split("[|]")[0];
                  String receivedData = message.split("[|]")[1];
 
-                 if (command.equals("QUIT")) {
-                     System.out.println(playerId + "has left the game");
-                     return;
-                 }
-                 else if (command.equals("CHOSEN_FIELD")) {
-                     System.out.println("player " + playerId + " current field");
-                     startMoveField = Integer.parseInt(receivedData);
-                     game.showPossibilities(startMoveField, playerId);
-                 }
-                 else if (command.equals("MOVE")) {
-                     System.out.println("player " + playerId + "is trying to move");
-                     endMoveField = Integer.parseInt(receivedData);
-                     game.move(startMoveField, endMoveField, playerId);
+                 switch (command) {
+                     case "QUIT" : {
+                         System.out.println(playerId + "has left the game");
+                         return;
+                     }
+                     case "CHOSEN_FIELD" : {
+                         System.out.println("player " + playerId + " current field");
+                         startMoveField = Integer.parseInt(receivedData);
+                         game.showPossibilities(startMoveField, playerId);
+                         break;
+                     }
+                     case "MOVE" : {
+                         System.out.println("player " + playerId + "is trying to move");
+                         endMoveField = Integer.parseInt(receivedData);
+                         game.move(startMoveField, endMoveField, playerId);
+                         break;
+                     }
+                     case "RESET_ACTION" : {
+
+                         break;
+                     }
                  }
 
              }
          } catch (Exception e) {
              e.printStackTrace();
-         } finally {
+         }
+         finally {
              try {
                  socket.close();
              } catch (IOException e) {

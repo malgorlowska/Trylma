@@ -46,8 +46,8 @@ public class Game {
          converter = new JSONBoardConverter();
 
          if (rules.moveIsCorrect(this.getBoard(), endMoveField)) {
-             board.fields.get(startMoveField).setCurrentPlayerColor(PlayerColor.NO_PLAYER);
-             board.fields.get(endMoveField).setCurrentPlayerColor(PlayerColor.fromInteger(playerId));
+             board.fields.get(startMoveField).setPlayerColor(PlayerColor.NO_PLAYER);
+             board.fields.get(endMoveField).setPlayerColor(PlayerColor.fromInteger(playerId));
              this.resetFieldsStatus();
 
              // managing players queue
@@ -68,6 +68,7 @@ public class Game {
          // TODO check if someone won the game
      }
 
+
     public synchronized void showPossibilities(int startMoveField, int playerId) {
         if (playerId != currentPlayer) {
             throw new IllegalStateException("Not your turn");
@@ -76,9 +77,9 @@ public class Game {
         this.getRules().setAvailableFields(this.getBoard(), startField, true);
 
 
-        startField.setCurrentStatusColor(StatusColor.RED);
+        startField.setStatusColor(StatusColor.ACTIVE);
         for (int fieldID : this.getRules().getAvailableFields()) {
-            this.getBoard().fields.get(fieldID).setCurrentStatusColor(StatusColor.POSSIBLE_MOVE);
+            this.getBoard().fields.get(fieldID).setStatusColor(StatusColor.POSSIBLE_MOVE);
         }
 
         converter = new JSONBoardConverter();
@@ -88,7 +89,7 @@ public class Game {
 
     public void resetFieldsStatus() {
         for (BoardField field : this.getBoard().fields) {
-            field.setCurrentStatusColor(StatusColor.GREEN);
+            field.setStatusColor(StatusColor.INACTIVE);
         }
     }
 

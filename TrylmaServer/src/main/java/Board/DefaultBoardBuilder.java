@@ -34,9 +34,9 @@ public class DefaultBoardBuilder implements BoardBuilder{
 
         int xPosition;
         int defXPosition = 50;
-        int yPosition = 10;
+        int yPosition = 50;
         int pColorID = PlayerColor.NO_PLAYER.playerColorID;
-        int sColorID = StatusColor.GREEN.statusColorID;
+        int sColorID = StatusColor.INACTIVE.statusColorID;
 
         for (int i = 0; i < defaultBoardShape.length; i++) {
             if(i % 2 == 0){xPosition = defXPosition;}
@@ -76,67 +76,63 @@ public class DefaultBoardBuilder implements BoardBuilder{
     @Override
     public void assignFields(int numberOfPlayers) {
         switch (numberOfPlayers) {
-            case 2:
-            {
+            case 2: {
                 for (BoardField field : this.board.startFields.topFields) {
-                    field.setCurrentPlayerColor(PlayerColor.BLUE);
+                    field.setPlayerColor(PlayerColor.BLUE);
                 }
                 for (BoardField field : this.board.startFields.bottomFields) {
-                    field.setCurrentPlayerColor(PlayerColor.ORANGE);
+                    field.setPlayerColor(PlayerColor.GREEN);
                 }
                 break;
             }
 
-            case 3:
-            {
+            case 3: {
                 for (BoardField field : this.board.startFields.topLeftFields) {
-                    field.setCurrentPlayerColor(PlayerColor.BLUE);
+                    field.setPlayerColor(PlayerColor.BLUE);
                 }
                 for (BoardField field : this.board.startFields.topRightFields) {
-                    field.setCurrentPlayerColor(PlayerColor.ORANGE);
+                    field.setPlayerColor(PlayerColor.GREEN);
                 }
                 for (BoardField field : this.board.startFields.bottomFields) {
-                    field.setCurrentPlayerColor(PlayerColor.PINK);
+                    field.setPlayerColor(PlayerColor.YELLOW);
                 }
                 break;
             }
 
-            case 4:
-            {
+            case 4: {
                 for (BoardField field : this.board.startFields.topLeftFields) {
-                    field.setCurrentPlayerColor(PlayerColor.BLUE);
+                    field.setPlayerColor(PlayerColor.BLUE);
                 }
                 for (BoardField field : this.board.startFields.topRightFields) {
-                    field.setCurrentPlayerColor(PlayerColor.ORANGE);
+                    field.setPlayerColor(PlayerColor.GREEN);
                 }
                 for (BoardField field : this.board.startFields.bottomLeftFields) {
-                    field.setCurrentPlayerColor(PlayerColor.PINK);
+                    field.setPlayerColor(PlayerColor.YELLOW);
                 }
                 for (BoardField field : this.board.startFields.bottomRightFields) {
-                    field.setCurrentPlayerColor(PlayerColor.PURPLE);
+                    field.setPlayerColor(PlayerColor.ORANGE);
                 }
                 break;
             }
 
-            case 6:
-            {
+            case 6: {
                 for (BoardField field : this.board.startFields.topFields) {
-                    field.setCurrentPlayerColor(PlayerColor.BLUE);
+                    field.setPlayerColor(PlayerColor.BLUE);
                 }
                 for (BoardField field : this.board.startFields.topLeftFields) {
-                    field.setCurrentPlayerColor(PlayerColor.ORANGE);
+                    field.setPlayerColor(PlayerColor.GREEN);
                 }
                 for (BoardField field : this.board.startFields.topRightFields) {
-                    field.setCurrentPlayerColor(PlayerColor.PINK);
+                    field.setPlayerColor(PlayerColor.YELLOW);
                 }
                 for (BoardField field : this.board.startFields.bottomLeftFields) {
-                    field.setCurrentPlayerColor(PlayerColor.PURPLE);
+                    field.setPlayerColor(PlayerColor.ORANGE);
                 }
                 for (BoardField field : this.board.startFields.bottomRightFields) {
-                    field.setCurrentPlayerColor(PlayerColor.BLACK);
+                    field.setPlayerColor(PlayerColor.PINK);
                 }
                 for (BoardField field : this.board.startFields.bottomFields) {
-                    field.setCurrentPlayerColor(PlayerColor.WHITE);
+                    field.setPlayerColor(PlayerColor.PURPLE);
                 }
                 break;
             }

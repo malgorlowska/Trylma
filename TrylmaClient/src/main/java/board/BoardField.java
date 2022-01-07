@@ -12,7 +12,7 @@ public class BoardField extends Ellipse2D.Double {
     private int column;
 
     public BoardField(int row, int column, double xPosition, double yPosition,
-                      int playerColorID, int statusColorID){
+                      int playerColorID, int statusColorID) {
 
         this.setFrame(xPosition, yPosition, 25, 20);
         this.setRow(row);
@@ -27,7 +27,6 @@ public class BoardField extends Ellipse2D.Double {
         return this.getBounds2D().contains(x, y);
     }
 
-
     public Color getCurrentPlayerColor() {
         return currentPlayerColor;
     }
@@ -36,25 +35,25 @@ public class BoardField extends Ellipse2D.Double {
         this.playerColor = playerColor;
         switch (playerColor) {
             case BLUE:
-                this.currentPlayerColor  = Color.CYAN;
+                this.currentPlayerColor  = new Color(65,105,225);
+                break;
+            case GREEN:
+                this.currentPlayerColor = new Color(0,250,154);
+                break;
+            case YELLOW:
+                this.currentPlayerColor = new Color(255,255,102);
                 break;
             case ORANGE:
-                this.currentPlayerColor = Color.ORANGE;
+                this.currentPlayerColor = new Color(255,127,80);
                 break;
             case PINK:
-                this.currentPlayerColor = Color.PINK;
+                this.currentPlayerColor = new Color(255,145,164);
                 break;
             case PURPLE:
-                this.currentPlayerColor = Color.MAGENTA;
-                break;
-            case BLACK:
-                this.currentPlayerColor = Color.BLACK;
-                break;
-            case WHITE:
-                this.currentPlayerColor = Color.WHITE;
+                this.currentPlayerColor = new Color(148,87,235);
                 break;
             case NO_PLAYER:
-                this.currentPlayerColor = Color.GRAY;
+                this.currentPlayerColor = new Color(196,195,208);
         }
     }
 
@@ -66,14 +65,14 @@ public class BoardField extends Ellipse2D.Double {
     public void setCurrentStatusColor(StatusColor statusColor) {
         this.statusColor = statusColor;
         switch (statusColor){
-            case RED:
-                this.currentStatusColor = Color.RED;
+            case ACTIVE:
+                this.currentStatusColor = new Color(80, 235, 221);
                 break;
-            case GREEN:
-                this.currentStatusColor = Color.GREEN;
+            case INACTIVE:
+                this.currentStatusColor = new Color(36, 33, 36);
                 break;
             case POSSIBLE_MOVE:
-                this.currentStatusColor = new Color(6, 100, 43);
+                this.currentStatusColor = new Color(237, 74, 110);
                 break;
         }
     }

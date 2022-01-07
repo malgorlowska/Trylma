@@ -12,8 +12,7 @@ public class DefaultBoard extends Board {
     public DefaultBoard () {
         this.isDoubleBuffered();
         this.setOpaque(true);
-        this.setBorder(BorderFactory.createEtchedBorder());
-        this.setBackground(Color.DARK_GRAY);
+        this.setBackground(new Color(76,81,109));
 
         this.addMouseListener(new MouseAdapter() {
             @Override
@@ -23,7 +22,7 @@ public class DefaultBoard extends Board {
                     if (field.isHit(e.getX(),e.getY())
                             && getPlayer().getPlayerColor() == field.getPlayerColor()) {
 
-                        field.setCurrentStatusColor(StatusColor.RED);
+                        field.setCurrentStatusColor(StatusColor.ACTIVE);
                         getPlayer().out.println("CHOSEN_FIELD|" + fields.indexOf(field));
                         repaint();
                         setMouseFlag(1);
@@ -34,7 +33,7 @@ public class DefaultBoard extends Board {
                         if (field.isHit(e.getX(),e.getY())
                                 && field.getPlayerColor() == PlayerColor.NO_PLAYER) {
 
-                            field.setCurrentStatusColor(StatusColor.RED);
+                            field.setCurrentStatusColor(StatusColor.ACTIVE);
                             getPlayer().out.println("MOVE|" + fields.indexOf(field));
                             repaint();
                             setMouseFlag(0);

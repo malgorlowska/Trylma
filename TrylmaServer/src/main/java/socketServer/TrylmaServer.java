@@ -1,26 +1,17 @@
 package socketServer;
 
 import java.io.IOException;
-import java.lang.ref.Reference;
-import java.net.ServerSocket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * 
  *
  */
-public class TrylmaServer 
-{
-    /*private static ExecutorService players;
-    static int numberOfPlayers = 0;
-    public static Game game;*/
+public class TrylmaServer {
     
-	public static void main( String[] args )
-    {
-    	int port = 0; //port serwera
+	public static void main( String[] args ) {
+    	int port = 0;
     	int numberOfPlayers = 0;
-    	SocketServer server = null;
+    	SocketServer server;
 
     	try {
     		port = Integer.parseInt(args[0]);
@@ -42,7 +33,5 @@ public class TrylmaServer
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-
 	}
 }

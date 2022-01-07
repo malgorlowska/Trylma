@@ -6,7 +6,7 @@ import board.*;
 import org.json.JSONException;
 import java.awt.*;
 
-public class ApplicationWindow extends JFrame{
+public class ApplicationWindow extends JFrame {
 
     int playerID;
     DefaultBoardBuilder builder;
@@ -22,28 +22,26 @@ public class ApplicationWindow extends JFrame{
     public ApplicationWindow(int playerID, int currentPlayerID, String JSONBoard) {
     	this.playerID = playerID;
         this.playerColor = PlayerColor.fromInteger(playerID);
-        this.infoPanel = new PlayerInfoPanel(playerColor.toString());
+        this.infoPanel = new PlayerInfoPanel(playerColor);
 
         this.builder = new DefaultBoardBuilder();
         this.setBoard(JSONBoard);
-
         this.setCurrPlayer(currentPlayerID);
 
         this.setLayout(new BorderLayout());
         this.add(infoPanel, BorderLayout.WEST);
         this.add(board, BorderLayout.CENTER);
 
-        int width = 800;
-        int height = 600;
+        int width = 825;
+        int height = 650;
         this.setSize(width, height);
-        this.setTitle("Trylma");       
+        this.setTitle("TRYLMA");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public void setCurrPlayer(int currPlayerID) {
-        String player = "       " + PlayerColor.fromInteger(currPlayerID).toString();
-        this.infoPanel.currentPlayerInfo.setText(player);
-        this.infoPanel.repaint();
+        PlayerColor currPlayerColor = PlayerColor.fromInteger(currPlayerID);
+        this.infoPanel.setCurrentPlayerInfo(currPlayerColor);
     }
 
     public Board getBoard () {
@@ -58,5 +56,4 @@ public class ApplicationWindow extends JFrame{
         }
         this.board = builder.getDefaultBoard();
     }
-
 }

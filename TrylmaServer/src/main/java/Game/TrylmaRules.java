@@ -105,11 +105,11 @@ public class TrylmaRules implements Rules {
             case 2: {
                 if (currentPlayer == 1) {
                     for (BoardField field : board.startFields.bottomFields)
-                        if (!field.getPlayerColor().equals(field.getCurrentPlayerColor()))
+                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
                             return false;
                 } else {
                     for (BoardField field : board.startFields.topFields)
-                        if (!field.getPlayerColor().equals(field.getCurrentPlayerColor()))
+                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
                             return false;
                 }
                 break;
@@ -118,15 +118,15 @@ public class TrylmaRules implements Rules {
             case 3: {
                 if (currentPlayer == 1) {
                     for (BoardField field : board.startFields.bottomRightFields)
-                        if (!field.getPlayerColor().equals(field.getCurrentPlayerColor()))
+                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
                             return false;
                 } else if (currentPlayer == 2) {
                     for (BoardField field : board.startFields.bottomLeftFields)
-                        if (!field.getPlayerColor().equals(field.getCurrentPlayerColor()))
+                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
                             return false;
                 }else {
                     for (BoardField field : board.startFields.bottomFields)
-                        if (!field.getPlayerColor().equals(field.getCurrentPlayerColor()))
+                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
                             return false;
                 }
                 break;
@@ -135,19 +135,19 @@ public class TrylmaRules implements Rules {
             case 4: {
                 if (currentPlayer == 1) {
                     for (BoardField field : board.startFields.bottomRightFields)
-                        if (!field.getPlayerColor().equals(field.getCurrentPlayerColor()))
+                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
                             return false;
                 } else if (currentPlayer == 2) {
                     for (BoardField field : board.startFields.bottomLeftFields)
-                        if (!field.getPlayerColor().equals(field.getCurrentPlayerColor()))
+                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
                             return false;
                 }else if (currentPlayer == 3){
                     for (BoardField field : board.startFields.topRightFields)
-                        if (!field.getPlayerColor().equals(field.getCurrentPlayerColor()))
+                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
                             return false;
                 }else {
                     for (BoardField field : board.startFields.topLeftFields)
-                        if (!field.getPlayerColor().equals(field.getCurrentPlayerColor()))
+                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
                             return false;
                 }
                 break;
@@ -156,27 +156,27 @@ public class TrylmaRules implements Rules {
             case 6: {
                 if (currentPlayer == 1) {
                     for (BoardField field : board.startFields.bottomFields)
-                        if (!field.getPlayerColor().equals(field.getCurrentPlayerColor()))
+                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
                             return false;
                 } else if (currentPlayer == 2) {
                     for (BoardField field : board.startFields.bottomRightFields)
-                        if (!field.getPlayerColor().equals(field.getCurrentPlayerColor()))
+                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
                             return false;
                 }else if (currentPlayer == 3){
                     for (BoardField field : board.startFields.bottomLeftFields)
-                        if (!field.getPlayerColor().equals(field.getCurrentPlayerColor()))
+                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
                             return false;
                 }else if (currentPlayer == 4){
                     for (BoardField field : board.startFields.topRightFields)
-                        if (!field.getPlayerColor().equals(field.getCurrentPlayerColor()))
+                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
                             return false;
                 }else if (currentPlayer == 5){
                     for (BoardField field : board.startFields.topLeftFields)
-                        if (!field.getPlayerColor().equals(field.getCurrentPlayerColor()))
+                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
                             return false;
                 }else {
                     for (BoardField field : board.startFields.topFields)
-                        if (!field.getPlayerColor().equals(field.getCurrentPlayerColor()))
+                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
                             return false;
                 }
                 break;
