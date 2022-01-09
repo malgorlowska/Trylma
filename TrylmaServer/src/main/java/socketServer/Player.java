@@ -64,6 +64,7 @@ public class Player implements Runnable {
                          System.out.println("player " + playerId + "is trying to move");
                          endMoveField = Integer.parseInt(receivedData);
                          game.move(startMoveField, endMoveField, playerId);
+                         System.out.println("startMoveField " + startMoveField + " endMoveField " + endMoveField);
                          break;
                      }
                      case "RESET_ACTION" : {

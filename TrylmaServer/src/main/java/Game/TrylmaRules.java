@@ -100,16 +100,16 @@ public class TrylmaRules implements Rules {
     }
 
     @Override
-    public boolean isWinner(Board board, int currentPlayer) {
+    public boolean isWinner(Game game, int currentPlayer) {
         switch (playersCount) {
             case 2: {
                 if (currentPlayer == 1) {
-                    for (BoardField field : board.startFields.bottomFields)
-                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
+                    for (BoardField field : game.getBoard().startFields.bottomFields)
+                        if (!field.getPlayerColor().equals(PlayerColor.fromInteger(currentPlayer)))
                             return false;
                 } else {
-                    for (BoardField field : board.startFields.topFields)
-                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
+                    for (BoardField field : game.getBoard().startFields.topFields)
+                        if (!field.getPlayerColor().equals(PlayerColor.fromInteger(currentPlayer)))
                             return false;
                 }
                 break;
@@ -117,16 +117,16 @@ public class TrylmaRules implements Rules {
 
             case 3: {
                 if (currentPlayer == 1) {
-                    for (BoardField field : board.startFields.bottomRightFields)
-                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
+                    for (BoardField field : game.getBoard().startFields.bottomRightFields)
+                        if (!field.getPlayerColor().equals(PlayerColor.fromInteger(currentPlayer)))
                             return false;
                 } else if (currentPlayer == 2) {
-                    for (BoardField field : board.startFields.bottomLeftFields)
-                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
+                    for (BoardField field : game.getBoard().startFields.bottomLeftFields)
+                        if (!field.getPlayerColor().equals(PlayerColor.fromInteger(currentPlayer)))
                             return false;
                 }else {
-                    for (BoardField field : board.startFields.bottomFields)
-                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
+                    for (BoardField field : game.getBoard().startFields.bottomFields)
+                        if (!field.getPlayerColor().equals(PlayerColor.fromInteger(currentPlayer)))
                             return false;
                 }
                 break;
@@ -134,20 +134,20 @@ public class TrylmaRules implements Rules {
 
             case 4: {
                 if (currentPlayer == 1) {
-                    for (BoardField field : board.startFields.bottomRightFields)
-                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
+                    for (BoardField field : game.getBoard().startFields.bottomRightFields)
+                        if (!field.getPlayerColor().equals(PlayerColor.fromInteger(currentPlayer)))
                             return false;
                 } else if (currentPlayer == 2) {
-                    for (BoardField field : board.startFields.bottomLeftFields)
-                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
+                    for (BoardField field : game.getBoard().startFields.bottomLeftFields)
+                        if (!field.getPlayerColor().equals(PlayerColor.fromInteger(currentPlayer)))
                             return false;
                 }else if (currentPlayer == 3){
-                    for (BoardField field : board.startFields.topRightFields)
-                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
+                    for (BoardField field : game.getBoard().startFields.topRightFields)
+                        if (!field.getPlayerColor().equals(PlayerColor.fromInteger(currentPlayer)))
                             return false;
                 }else {
-                    for (BoardField field : board.startFields.topLeftFields)
-                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
+                    for (BoardField field : game.getBoard().startFields.topLeftFields)
+                        if (!field.getPlayerColor().equals(PlayerColor.fromInteger(currentPlayer)))
                             return false;
                 }
                 break;
@@ -155,28 +155,28 @@ public class TrylmaRules implements Rules {
 
             case 6: {
                 if (currentPlayer == 1) {
-                    for (BoardField field : board.startFields.bottomFields)
-                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
+                    for (BoardField field : game.getBoard().startFields.bottomFields)
+                        if (!field.getPlayerColor().equals(PlayerColor.fromInteger(currentPlayer)))
                             return false;
                 } else if (currentPlayer == 2) {
-                    for (BoardField field : board.startFields.bottomRightFields)
-                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
+                    for (BoardField field : game.getBoard().startFields.bottomRightFields)
+                        if (!field.getPlayerColor().equals(PlayerColor.fromInteger(currentPlayer)))
                             return false;
                 }else if (currentPlayer == 3){
-                    for (BoardField field : board.startFields.bottomLeftFields)
-                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
+                    for (BoardField field : game.getBoard().startFields.bottomLeftFields)
+                        if (!field.getPlayerColor().equals(PlayerColor.fromInteger(currentPlayer)))
                             return false;
                 }else if (currentPlayer == 4){
-                    for (BoardField field : board.startFields.topRightFields)
-                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
+                    for (BoardField field : game.getBoard().startFields.topRightFields)
+                        if (!field.getPlayerColor().equals(PlayerColor.fromInteger(currentPlayer)))
                             return false;
                 }else if (currentPlayer == 5){
-                    for (BoardField field : board.startFields.topLeftFields)
-                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
+                    for (BoardField field : game.getBoard().startFields.topLeftFields)
+                        if (!field.getPlayerColor().equals(PlayerColor.fromInteger(currentPlayer)))
                             return false;
                 }else {
-                    for (BoardField field : board.startFields.topFields)
-                        if (!field.getPlayerColor().equals(field.getPlayerColor()))
+                    for (BoardField field : game.getBoard().startFields.topFields)
+                        if (!field.getPlayerColor().equals(PlayerColor.fromInteger(currentPlayer)))
                             return false;
                 }
                 break;

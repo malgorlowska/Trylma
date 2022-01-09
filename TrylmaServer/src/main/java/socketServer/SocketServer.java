@@ -20,7 +20,7 @@ public class SocketServer {
     int port;
     public static List<Player> players;
 	
-    SocketServer(int port, int numberOfPlayers) {
+    public SocketServer(int port, int numberOfPlayers) {
         System.out.println("Server");
         this.numberOfPlayers = numberOfPlayers;
         this.port = port;
@@ -50,7 +50,6 @@ public class SocketServer {
         }
         game = new Game(players);
     }
-
 
     @Override
     protected void finalize() {

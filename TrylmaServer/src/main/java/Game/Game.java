@@ -2,6 +2,8 @@ package Game;
 
 import Board.*;
 import socketServer.Player;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,13 +13,15 @@ import java.util.List;
 public class Game {
     int playersCount;
 	int currentPlayer;
+    public List<Integer> winners;
     public static List<Player> players;
     TrylmaRules rules;
     Board board;
     JSONBoardConverter converter;
 
 	public Game(List<Player> players) {
-        Game.players = players;
+        this.players = players;
+        this.winners = new ArrayList<>();
         this.playersCount = players.size();
         this.rules = new TrylmaRules(playersCount);
         this.currentPlayer = PlayerColor.BLUE.playerColorID;
@@ -36,6 +40,7 @@ public class Game {
 
     public String getInitializationData (int playerID) {
         String jsonBoard = converter.buildJSONBoard(board);
+        System.out.println(playerID + "|" + jsonBoard + "|" + currentPlayer);
         return playerID + "|" + jsonBoard + "|" + currentPlayer;
     }
 
@@ -53,22 +58,34 @@ public class Game {
              // managing players queue
              currentPlayer = currentPlayer % playersCount + 1;
 
+             while(!playerStillPlaying(currentPlayer))
+                currentPlayer = currentPlayer % playersCount + 1;
+             // TODO check if everybody won the game
              converter = new JSONBoardConverter();
              String updatedBoard = "UPDATE_BOARD|" + converter.buildJSONBoard(board) + "|" + currentPlayer;
              sendToPlayers(updatedBoard);
          }
          
-        if (this.getRules().isWinner(this.getBoard(), playerId)){
+        if (this.getRules().isWinner(this, playerId)){
             this.sendToPlayer(playerId, "YOU_WON");
+            this.winners.add(playerId);
             System.out.println("Player " + playerId + "won the game");
         }
 
         this.getRules().resetAvailableFields();
 
-         // TODO check if someone won the game
+
      }
 
-
+    public boolean playerStillPlaying(int playerId){
+        boolean isWinner = false;
+        for(int i = 0; i < winners.size(); i++)
+            if(winners.get(i) == playerId)
+                isWinner = true;
+        if(isWinner)
+            return false;
+        else return true;
+    }
     public synchronized void showPossibilities(int startMoveField, int playerId) {
         if (playerId != currentPlayer) {
             throw new IllegalStateException("Not your turn");

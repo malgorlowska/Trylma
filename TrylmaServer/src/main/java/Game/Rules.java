@@ -4,7 +4,7 @@ import Board.*;
 
 public interface Rules {
 
-    boolean isWinner(Board board, int playerID);
+    boolean isWinner(Game game, int playerID);
 
     boolean moveIsCorrect(Board board, int endMoveField);
 
