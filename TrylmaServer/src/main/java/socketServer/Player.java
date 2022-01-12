@@ -96,6 +96,10 @@ public class Player implements Runnable {
         return playerId;
     }
 
+    public void setPlayerId(int id) {
+        this.playerId = id;
+    }
+
     public void sendMessage(String message) {
         System.out.println("trying to sent message: " + message);
         output.println(message);

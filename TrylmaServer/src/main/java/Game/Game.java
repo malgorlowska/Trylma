@@ -138,6 +138,10 @@ public class Game {
         return board;
     }
 
+    public void setCurrentPlayer(int id){
+        this.currentPlayer = id;
+    }
+
     public TrylmaRules getRules() {
         return rules;
     }
