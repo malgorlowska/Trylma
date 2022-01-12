@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 import frontend.ApplicationWindow;
 
+import javax.swing.*;
+
 /**
  * Hello world!
  *
@@ -92,6 +94,9 @@ public class SocketClient {
 
             if (command.equals("YOU_WON")){
                 System.out.println("you won the game");
+                JOptionPane.showMessageDialog(this.appWindow, "Congratulations!\n You won the game.",
+                        "INFORMATION",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
@@ -111,5 +116,6 @@ public class SocketClient {
     public void setPlayerColor(PlayerColor playerColor) {
         this.playerColor = playerColor;
     }
+
 
 }

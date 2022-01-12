@@ -31,13 +31,19 @@
       <version>1.0.0</version>
       <scope>compile</scope>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
     <dependency>
-      <!-- needs extra dependencies: objenesis & hamcrest -->
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
-      <version>1.9.0-rc1</version>
+      <version>4.2.0</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+          <groupId>org.testng</groupId>
+          <artifactId>testng</artifactId>
+          <version>RELEASE</version>
+          <scope>compile</scope>
+      </dependency>
   </dependencies>
 
   <build>

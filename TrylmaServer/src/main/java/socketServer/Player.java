@@ -47,6 +47,7 @@ public class Player implements Runnable {
              while (input.hasNextLine()) {
                  String message = input.nextLine();
                  String command = message.split("[|]")[0];
+                 System.out.println("komenda " + command);
                  String receivedData = message.split("[|]")[1];
 
                  switch (command) {

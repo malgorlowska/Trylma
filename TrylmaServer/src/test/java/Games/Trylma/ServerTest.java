@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.mockito.Mockito.*;
 
 import static org.junit.Assert.assertTrue;
@@ -28,16 +29,25 @@ public class ServerTest {
         String boardBefore = Files.readString(Path.of("E:\\workspace\\Trylma\\TrylmaServer\\board1.txt"));
         String boardAfter = Files.readString(Path.of("E:\\workspace\\Trylma\\TrylmaServer\\board.txt"));
 
-        assertTrue(game.getInitializationData(1).equals(boardBefore));
+        //System.out.println("game.getInitializationData(1)");
+        String initializationData = game.getInitializationData(1);
+        //System.out.println(initializationData);
+        //System.out.println("boardBefore");
+        //System.out.println(boardBefore);
+
+        boardBefore = boardBefore.replaceAll("\\s+","");
+        initializationData = initializationData.replaceAll("\\s+","");
+        assertTrue(boardBefore.equals(initializationData));
 
         game.move(7, 16, 1);
         JSONBoardConverter converter = new JSONBoardConverter();
         String updatedBoard = converter.buildJSONBoard(game.getBoard());
+        boardAfter = boardBefore.replaceAll("\\s+","");
+        updatedBoard = initializationData.replaceAll("\\s+","");
         assertTrue(boardAfter.equals(updatedBoard));
     }
 
     protected Player createMockedPlayer() {
         return mock(Player.class);
-
     }
 }

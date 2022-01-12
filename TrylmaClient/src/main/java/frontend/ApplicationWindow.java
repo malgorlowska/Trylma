@@ -41,7 +41,16 @@ public class ApplicationWindow extends JFrame {
 
     public void setCurrPlayer(int currPlayerID) {
         PlayerColor currPlayerColor = PlayerColor.fromInteger(currPlayerID);
+        ifYouCurrentPlayer(currPlayerID);
         this.infoPanel.setCurrentPlayerInfo(currPlayerColor);
+    }
+
+    public void ifYouCurrentPlayer(int currPlayer)
+    {
+        if(this.playerID == currPlayer)
+            this.board.setActive(true);
+        else
+            this.board.setActive(false);
     }
 
     public Board getBoard () {

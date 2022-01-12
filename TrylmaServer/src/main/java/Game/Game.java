@@ -40,7 +40,7 @@ public class Game {
 
     public String getInitializationData (int playerID) {
         String jsonBoard = converter.buildJSONBoard(board);
-        System.out.println(playerID + "|" + jsonBoard + "|" + currentPlayer);
+        //System.out.println(playerID + "|" + jsonBoard + "|" + currentPlayer);
         return playerID + "|" + jsonBoard + "|" + currentPlayer;
     }
 
@@ -60,10 +60,18 @@ public class Game {
 
              while(!playerStillPlaying(currentPlayer))
                 currentPlayer = currentPlayer % playersCount + 1;
-             // TODO check if everybody won the game
              converter = new JSONBoardConverter();
              String updatedBoard = "UPDATE_BOARD|" + converter.buildJSONBoard(board) + "|" + currentPlayer;
              sendToPlayers(updatedBoard);
+         }
+         else{
+             //wyślij wiadomość niepoprawny ruch
+             //wyczyść wyś
+             this.resetFieldsStatus();
+             converter = new JSONBoardConverter();
+             String updatedBoard = "UPDATE_BOARD|" + converter.buildJSONBoard(board) + "|" + currentPlayer;
+             sendToPlayers(updatedBoard);
+
          }
          
         if (this.getRules().isWinner(this, playerId)){
@@ -90,6 +98,8 @@ public class Game {
         if (playerId != currentPlayer) {
             throw new IllegalStateException("Not your turn");
         }
+        resetFieldsStatus();
+        this.getRules().resetAvailableFields();
         BoardField startField = this.getBoard().fields.get(startMoveField);
         this.getRules().setAvailableFields(this.getBoard(), startField, true);
 
