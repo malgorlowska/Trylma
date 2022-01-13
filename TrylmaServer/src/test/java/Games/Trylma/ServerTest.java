@@ -85,7 +85,7 @@ public class ServerTest {
     }
 
     @Test
-    public void ifPlayerCouldMove(){
+    public void ifPlayerCouldMove() throws IOException {
         SocketServer server = new SocketServer(4577,3);
         Player player1 = createMockedPlayer();
         Player player2 = createMockedPlayer();
@@ -109,7 +109,35 @@ public class ServerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    @Test
+    public void setAvailableFields() throws IOException {
+        SocketServer server = new SocketServer(4578,3);
+        Player player1 = createMockedPlayer();
+        Player player2 = createMockedPlayer();
+        Player player3 = createMockedPlayer();
+        List<Player> players = new ArrayList<>();
+
+        when(player1.getPlayerId()).thenReturn(1);
+        when(player2.getPlayerId()).thenReturn(2);
+        when(player3.getPlayerId()).thenReturn(3);
+
+        players.add(player1);
+        players.add(player2);
+        players.add(player3);
+
+        Game game = new Game(players);
+
+        String boardBefore = Files.readString(Path.of("E:\\workspace\\Trylma\\TrylmaServer\\boardBeforeSetAvailableFields.txt"));
+        boardBefore = boardBefore.replaceAll("\\s+","");
+
+        game.setCurrentPlayer(2);
+        game.showPossibilities(44,2);
+        ArrayList<Integer> availableFields= game.getRules().getAvailableFields();
+        assertTrue(availableFields.size() == 2);
+        assertTrue(availableFields.get(0) == 43);
+        assertTrue(availableFields.get(1) == 54);
     }
 
 

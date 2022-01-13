@@ -1,10 +1,12 @@
 package socketServer;
 
+import Board.JSONBoardConverter;
 import Game.Game;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -57,8 +59,14 @@ public class Player implements Runnable {
                      }
                      case "CHOSEN_FIELD" : {
                          System.out.println("player " + playerId + " current field");
+                         System.out.println("chosen fields, board " + receivedData);
+                         JSONBoardConverter converter = new JSONBoardConverter();
+                         String updatedBoard = converter.buildJSONBoard(game.getBoard());
+                         System.out.println(updatedBoard);
                          startMoveField = Integer.parseInt(receivedData);
                          game.showPossibilities(startMoveField, playerId);
+                         ArrayList<Integer> available = game.getRules().getAvailableFields();
+                         System.out.println("available " + available);
                          break;
                      }
                      case "MOVE" : {

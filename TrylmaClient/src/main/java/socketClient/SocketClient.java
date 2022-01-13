@@ -18,7 +18,7 @@ import javax.swing.*;
  * Hello world!
  *
  */
-public class SocketClient {
+public class SocketClient extends Socket{
 	private int playerId;
     private PlayerColor playerColor;
     public PrintWriter out = null;
