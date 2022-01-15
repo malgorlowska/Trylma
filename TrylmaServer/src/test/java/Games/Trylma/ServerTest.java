@@ -21,13 +21,13 @@ import static org.junit.Assert.assertTrue;
 public class ServerTest {
     @Test
     public void calculatingMove() throws IOException {
-        SocketServer server = new SocketServer(4574,2);
+        SocketServer server = new SocketServer(4574,2, 2);
         Player player1 = createMockedPlayer();
         Player player2 = createMockedPlayer();
         List<Player> players = new ArrayList<>();
         players.add(player1);
         players.add(player2);
-        Game game = new Game(players);
+        Game game = new Game(players, 2);
 
         String validBoardBefore = Files.readString(Path.of("E:\\workspace\\Trylma\\TrylmaServer\\board1.txt"));
         validBoardBefore = validBoardBefore.replaceAll("\\s+","");
@@ -48,7 +48,7 @@ public class ServerTest {
     }
     @Test
     public void whoWinTheGame(){
-        SocketServer server = new SocketServer(4576,3);
+        SocketServer server = new SocketServer(4576,3, 2);
         Player player1 = createMockedPlayer();
         Player player2 = createMockedPlayer();
         Player player3 = createMockedPlayer();
@@ -62,7 +62,7 @@ public class ServerTest {
         players.add(player2);
         players.add(player3);
 
-        Game game = new Game(players);
+        Game game = new Game(players, 2);
 
         for(BoardField f:  game.getBoard().startFields.bottomFields)
             f.setPlayerColor(PlayerColor.fromInteger(player1.getPlayerId()));
@@ -86,7 +86,7 @@ public class ServerTest {
 
     @Test
     public void ifPlayerCouldMove() throws IOException {
-        SocketServer server = new SocketServer(4577,3);
+        SocketServer server = new SocketServer(4577,3, 2);
         Player player1 = createMockedPlayer();
         Player player2 = createMockedPlayer();
         Player player3 = createMockedPlayer();
@@ -100,7 +100,7 @@ public class ServerTest {
         players.add(player2);
         players.add(player3);
 
-        Game game = new Game(players);
+        Game game = new Game(players, 2);
 
         game.setCurrentPlayer(2);
         try{
@@ -113,7 +113,7 @@ public class ServerTest {
 
     @Test
     public void setAvailableFields() throws IOException {
-        SocketServer server = new SocketServer(4578,3);
+        SocketServer server = new SocketServer(4578,3, 2);
         Player player1 = createMockedPlayer();
         Player player2 = createMockedPlayer();
         Player player3 = createMockedPlayer();
@@ -127,7 +127,7 @@ public class ServerTest {
         players.add(player2);
         players.add(player3);
 
-        Game game = new Game(players);
+        Game game = new Game(players, 2);
 
         String boardBefore = Files.readString(Path.of("E:\\workspace\\Trylma\\TrylmaServer\\boardBeforeSetAvailableFields.txt"));
         boardBefore = boardBefore.replaceAll("\\s+","");
