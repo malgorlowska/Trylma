@@ -3,14 +3,33 @@ package board;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
+/**
+ * A single field of a board,
+ * it stores information about
+ * its color, status and position
+ *
+ */
 public class BoardField extends Ellipse2D.Double {
-    private Color currentPlayerColor;
-    private Color currentStatusColor;
+    private Color playerColor_;
+    private Color statusColor_;
     private PlayerColor playerColor;
     private StatusColor statusColor;
     private int row;
     private int column;
 
+    /**
+     * BoardField constructor,
+     * the board is made based on an int[][] array
+     * the field can be identified based on its position in that array
+     *
+     * @param row - the row of an array associated to this field
+     * @param column - the column of an array associated to this field
+     * @param xPosition - X axis position on the screen
+     * @param yPosition - Y axis position on the screen
+     * @param playerColorID - field current color
+     * @param statusColorID - field current status
+     *
+     */
     public BoardField(int row, int column, double xPosition, double yPosition,
                       int playerColorID, int statusColorID) {
 
@@ -19,85 +38,136 @@ public class BoardField extends Ellipse2D.Double {
         this.setColumn(column);
         PlayerColor playerColor = PlayerColor.fromInteger(playerColorID);
         StatusColor statusColor = StatusColor.fromInteger(statusColorID);
-        this.setCurrentPlayerColor(playerColor);
-        this.setCurrentStatusColor(statusColor);
+        this.setPlayerColor_(playerColor);
+        this.setStatusColor_(statusColor);
     }
 
+    /**
+     * Checks if the field was clicked by the mouse
+     * @param x - X axis mouse position
+     * @param y - Y axis mouse position
+     * @return true if mouse clicked on the field
+     *
+     */
     public boolean isHit(int x, int y) {
         return this.getBounds2D().contains(x, y);
     }
 
-    public Color getCurrentPlayerColor() {
-        return currentPlayerColor;
+    /**
+     * @return returns current field color
+     *
+     */
+    public Color getPlayerColor_() {
+        return playerColor_;
     }
 
-    public void setCurrentPlayerColor(PlayerColor playerColor) {
+    /**
+     * Sets the field color
+     * @param playerColor a new player color
+     *
+     */
+    public void setPlayerColor_(PlayerColor playerColor) {
         this.playerColor = playerColor;
         switch (playerColor) {
             case BLUE:
-                this.currentPlayerColor  = new Color(65,105,225);
+                this.playerColor_ = new Color(65,105,225);
                 break;
             case GREEN:
-                this.currentPlayerColor = new Color(0,250,154);
+                this.playerColor_ = new Color(0,250,154);
                 break;
             case YELLOW:
-                this.currentPlayerColor = new Color(255,255,102);
+                this.playerColor_ = new Color(255,255,102);
                 break;
             case ORANGE:
-                this.currentPlayerColor = new Color(255,127,80);
+                this.playerColor_ = new Color(255,127,80);
                 break;
             case PINK:
-                this.currentPlayerColor = new Color(255,145,164);
+                this.playerColor_ = new Color(255,145,164);
                 break;
             case PURPLE:
-                this.currentPlayerColor = new Color(148,87,235);
+                this.playerColor_ = new Color(148,87,235);
                 break;
             case NO_PLAYER:
-                this.currentPlayerColor = new Color(196,195,208);
+                this.playerColor_ = new Color(196,195,208);
         }
     }
 
-
-    public Color getCurrentStatusColor() {
-        return currentStatusColor;
+    /**
+     * @return returns what is current field status
+     *
+     */
+    public Color getStatusColor_() {
+        return statusColor_;
     }
 
-    public void setCurrentStatusColor(StatusColor statusColor) {
+    /**
+     * Sets the field status and border color
+     * according to given status
+     *
+     * @param statusColor a new field status
+     *
+     */
+    public void setStatusColor_(StatusColor statusColor) {
         this.statusColor = statusColor;
         switch (statusColor){
             case ACTIVE:
-                this.currentStatusColor = new Color(80, 235, 221);
+                this.statusColor_ = new Color(80, 235, 221);
                 break;
             case INACTIVE:
-                this.currentStatusColor = new Color(36, 33, 36);
+                this.statusColor_ = new Color(36, 33, 36);
                 break;
             case POSSIBLE_MOVE:
-                this.currentStatusColor = new Color(237, 74, 110);
+                this.statusColor_ = new Color(237, 74, 110);
                 break;
         }
     }
 
-
+    /**
+     * @return returns field row
+     *
+     */
     public int getRow() {
         return row;
     }
 
+    /**
+     * Sets field row
+     * @param row row the field is in
+     *
+     */
     public void setRow(int row) {
         this.row = row;
     }
 
+    /**
+     * @return returns field column
+     *
+     */
     public int getColumn() {
         return column;
     }
 
+    /**
+     * Sets field column
+     * @param column column that the field is in
+     *
+     */
     public void setColumn(int column) {
         this.column = column;
     }
 
+    /**
+     * @return returns fields current color
+     *
+     */
     public PlayerColor getPlayerColor() {
         return playerColor;
     }
 
+    /**
+     * @return returns fields current status
+     *
+     */
     public StatusColor getStatusColor() {
         return statusColor;
     }

@@ -2,11 +2,12 @@ package Board;
 
 import java.util.ArrayList;
 
+/**
+ * The game board stores data about
+ * the fields and players positions
+ *
+ */
 public class DefaultBoard extends Board {
-
-    public DefaultBoard() {
-
-    }
 
     @Override
     public void setFields(ArrayList<BoardField> fields) {
@@ -14,8 +15,7 @@ public class DefaultBoard extends Board {
     }
 
     @Override
-    void setStartFields() {
-        this.startFields = new DefaultStartFields(this);
+    void setStartFields(DefaultStartFields startFields) {
+        this.startFields = startFields;
     }
-
 }

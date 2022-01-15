@@ -10,22 +10,31 @@ import java.util.concurrent.Executors;
 
 /**
  * Defines a server's socket.
- * @author Małgorzata Orłowska
- * @see socketServer.TrylmaServer
+ * Accepts players.
+ *
  */
 public class SocketServer {
+    public static List<Player> players;
     ServerSocket server = null;
     Game game;
 	int numberOfPlayers;
+    int boardSize;
     int port;
-    public static List<Player> players;
-	
-    public SocketServer(int port, int numberOfPlayers) {
+
+
+    /**
+     * Basic constructor
+     * @param port server port
+     * @param numberOfPlayers amount of players
+     * @param boardSize size of game board
+     *
+     */
+    public SocketServer(int port, int numberOfPlayers, int boardSize) {
         System.out.println("Server");
         this.numberOfPlayers = numberOfPlayers;
+        this.boardSize = boardSize;
         this.port = port;
         players = new ArrayList<>();
-
         try {
           server = new ServerSocket(port);
           System.out.println("The server is running.");
@@ -36,6 +45,12 @@ public class SocketServer {
         }
     }
 
+    /**
+     * Waits for players to join the server
+     * When all joined, starts the game
+     * @throws IOException exception
+     *
+     */
     public void listenSocket() throws IOException {
         System.out.println("Waiting for connections with " + numberOfPlayers + " players.");
         ExecutorService executors = Executors.newFixedThreadPool(numberOfPlayers);
@@ -46,19 +61,8 @@ public class SocketServer {
             players.add(player);
             executors.execute(player);
             System.out.println("Player " + newPlayerId + " has connected.");
-            newPlayerId++;
+            newPlayerId ++;
         }
-        game = new Game(players);
-    }
-
-    @Override
-    protected void finalize() {
-        try {
-
-          server.close();
-        } catch (IOException e) {
-
-          System.out.println("Could not close."); System.exit(-1);
-        }
+        game = new Game(players, boardSize);
     }
 }

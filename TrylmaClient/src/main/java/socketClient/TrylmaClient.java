@@ -1,16 +1,20 @@
 package socketClient;
 
-import frontend.ApplicationWindow;
-
-import java.io.IOException;
-
 /**
- * Hello world!
+ * Client class that sets the socket
+ * and runs the app.
+ * It needs server port passed as an argument.
  *
  */
 public class TrylmaClient {
 
-    public static void main( String[] args ) throws IOException {
+	/**
+	 * Runs the app
+	 * Server port must be passed as an argument
+	 * @param args you have to pass the server port
+	 *
+	 */
+    public static void main( String[] args ) {
     	if (args.length != 1) {
             System.err.println("Pass the server IP as command line argument.");
             return;

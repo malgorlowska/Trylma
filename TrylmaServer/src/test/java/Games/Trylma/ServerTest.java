@@ -14,6 +14,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 import static org.junit.Assert.assertTrue;
@@ -21,13 +22,15 @@ import static org.junit.Assert.assertTrue;
 public class ServerTest {
     @Test
     public void calculatingMove() throws IOException {
-        SocketServer server = new SocketServer(4574,2);
+        SocketServer server = new SocketServer(4574,2,2);
         Player player1 = createMockedPlayer();
         Player player2 = createMockedPlayer();
         List<Player> players = new ArrayList<>();
         players.add(player1);
         players.add(player2);
-        Game game = new Game(players);
+
+        int boardShape = 2;
+        Game game = new Game(players, boardShape);
 
         String validBoardBefore = Files.readString(Path.of("E:\\workspace\\Trylma\\TrylmaServer\\board1.txt"));
         validBoardBefore = validBoardBefore.replaceAll("\\s+","");
@@ -37,18 +40,18 @@ public class ServerTest {
 
         String initializationData = game.getInitializationData(1);
         initializationData = initializationData.replaceAll("\\s+","");
-        assertTrue(validBoardBefore.equals(initializationData));
+        assertEquals(validBoardBefore, initializationData);
 
         game.move(7, 16, 1);
         JSONBoardConverter converter = new JSONBoardConverter();
         String updatedBoard = converter.buildJSONBoard(game.getBoard());
         System.out.println(updatedBoard);
 
-        assertTrue(validBoardAfter.equals(updatedBoard));
+        assertEquals(validBoardAfter, updatedBoard);
     }
     @Test
     public void whoWinTheGame(){
-        SocketServer server = new SocketServer(4576,3);
+        SocketServer server = new SocketServer(4576,3,2);
         Player player1 = createMockedPlayer();
         Player player2 = createMockedPlayer();
         Player player3 = createMockedPlayer();
@@ -62,7 +65,8 @@ public class ServerTest {
         players.add(player2);
         players.add(player3);
 
-        Game game = new Game(players);
+        int boardShape = 2;
+        Game game = new Game(players, boardShape);
 
         for(BoardField f:  game.getBoard().startFields.bottomFields)
             f.setPlayerColor(PlayerColor.fromInteger(player1.getPlayerId()));
@@ -86,7 +90,7 @@ public class ServerTest {
 
     @Test
     public void ifPlayerCouldMove(){
-        SocketServer server = new SocketServer(4577,3);
+        SocketServer server = new SocketServer(4577,3,2);
         Player player1 = createMockedPlayer();
         Player player2 = createMockedPlayer();
         Player player3 = createMockedPlayer();
@@ -100,7 +104,8 @@ public class ServerTest {
         players.add(player2);
         players.add(player3);
 
-        Game game = new Game(players);
+        int boardShape = 2;
+        Game game = new Game(players, boardShape);
 
         game.setCurrentPlayer(2);
         try{

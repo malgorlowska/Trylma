@@ -1,15 +1,26 @@
 package board;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+/**
+ * The game board stores data about
+ * the board owner and players positions
+ * it also have mouse listener that sends
+ * info to the server when making a move
+ *
+ */
 public class DefaultBoard extends Board {
     private int mouseFlag = 0;
     private boolean active = false;
 
+    /**
+     * Sets board background and ads mouse listener.
+     * Handles sending data about a move to the server
+     *
+     */
     public DefaultBoard () {
         this.isDoubleBuffered();
         this.setOpaque(true);
@@ -24,7 +35,7 @@ public class DefaultBoard extends Board {
                             if (field.isHit(e.getX(), e.getY())
                                     && getPlayer().getPlayerColor() == field.getPlayerColor()) {
 
-                                field.setCurrentStatusColor(StatusColor.ACTIVE);
+                                field.setStatusColor_(StatusColor.ACTIVE);
                                 getPlayer().out.println("CHOSEN_FIELD|" + fields.indexOf(field));
                                 repaint();
                                 setMouseFlag(1);
@@ -35,14 +46,15 @@ public class DefaultBoard extends Board {
                             if (field.isHit(e.getX(), e.getY())
                                     && field.getPlayerColor() == PlayerColor.NO_PLAYER) {
 
-                                field.setCurrentStatusColor(StatusColor.ACTIVE);
+                                field.setStatusColor_(StatusColor.ACTIVE);
                                 getPlayer().out.println("MOVE|" + fields.indexOf(field));
                                 repaint();
                                 setMouseFlag(0);
-                            } else if(field.isHit(e.getX(), e.getY())
+                            }
+                            else if(field.isHit(e.getX(), e.getY())
                                     && field.getPlayerColor() == field.getPlayerColor()) {
 
-                                field.setCurrentStatusColor(StatusColor.ACTIVE);
+                                field.setStatusColor_(StatusColor.ACTIVE);
                                 getPlayer().out.println("CHOSEN_FIELD|" + fields.indexOf(field));
                                 repaint();
                                 setMouseFlag(1);
@@ -59,12 +71,30 @@ public class DefaultBoard extends Board {
         this.fields = fields;
     }
 
-    public void setActive(boolean active) {this.active = active;}
+    /**
+     * Determines if player can make a move
+     * @param active if true - can move
+     * @see frontend.ApplicationWindow
+     *
+     */
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
+    /**
+     * Gives info about what mouse click was made
+     * @return current mouse flag
+     *
+     */
     public int getMouseFlag() {
         return mouseFlag;
     }
 
+    /**
+     * Sets mouse flag
+     * @param i new mouse flag
+     *
+     */
     public void setMouseFlag(int i) {
         this.mouseFlag = i;
     }

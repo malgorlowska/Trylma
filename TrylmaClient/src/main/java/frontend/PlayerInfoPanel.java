@@ -5,12 +5,24 @@ import board.PlayerColor;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Panel that displays info about
+ * current player, and what player are we
+ *
+ */
 public class PlayerInfoPanel extends JPanel {
     JLabel playerColorInfo;
     JLabel descriptionPlayer;
     JLabel currentPlayerInfo;
     JLabel descriptionCurrent;
 
+    /**
+     * Basic constructor
+     * Sets which player are we
+     *
+     * @param playerColor our id
+     *
+     */
     public PlayerInfoPanel(PlayerColor playerColor) {
         this.setOpaque(true);
         this.descriptionPlayer = new JLabel("YOU ARE PLAYING WITH :");
@@ -42,6 +54,11 @@ public class PlayerInfoPanel extends JPanel {
         this.setBackground(new Color(76,81,109));
     }
 
+    /**
+     * Changes displayed info about current player
+     * @param currPlayerColor color of a current player
+     *
+     */
     public void setCurrentPlayerInfo(PlayerColor currPlayerColor) {
         String player = currPlayerColor.toString();
         this.currentPlayerInfo.setText(player);
@@ -49,6 +66,12 @@ public class PlayerInfoPanel extends JPanel {
         this.repaint();
     }
 
+    /**
+     * Provides right color based on color enum
+     * @param color enum of player color
+     * @return Color associated with the enum
+     *
+     */
     public Color getColor(PlayerColor color) {
         switch (color) {
             case BLUE:

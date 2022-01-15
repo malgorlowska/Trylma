@@ -1,5 +1,9 @@
 package Board;
 
+/**
+ * Enum with possible player colors
+ *
+ */
 public enum PlayerColor {
     BLUE(1),
     GREEN(2),
@@ -11,9 +15,21 @@ public enum PlayerColor {
 
     public final int playerColorID;
 
+    /**
+     * Each color is associated with a number (id)
+     * @param playerColorID color id
+     *
+     */
     PlayerColor(int playerColorID){
         this.playerColorID = playerColorID;
     }
+
+    /**
+     * Converts a number to a color
+     * @param x number given to convert
+     * @return color associated with a given number
+     *
+     */
     public static PlayerColor fromInteger(int x) {
         switch(x) {
             case 1:

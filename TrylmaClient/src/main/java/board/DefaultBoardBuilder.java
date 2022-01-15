@@ -3,9 +3,14 @@ package board;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
+
+/**
+ * Builds board based on string json
+ * that is sent by the server
+ *
+ */
 public class DefaultBoardBuilder implements BoardBuilder {
     DefaultBoard board = new DefaultBoard();
 
@@ -28,6 +33,10 @@ public class DefaultBoardBuilder implements BoardBuilder {
         this.board.setFields(fields);
     }
 
+    /**
+     * @return returns built board
+     *
+     */
     public DefaultBoard getDefaultBoard(){
         return this.board;
     }

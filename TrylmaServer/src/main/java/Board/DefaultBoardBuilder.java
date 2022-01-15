@@ -3,55 +3,45 @@ package Board;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
+/**
+ * Builds board based on one of int[][] arrays
+ * that are stored in BoardShapes
+ *
+ */
 public class DefaultBoardBuilder implements BoardBuilder{
     DefaultBoard board = new DefaultBoard();
 
     @Override
-    public void initializeBoardFields() {
-        int[][] defaultBoardShape =
-       {{0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-        {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-        {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-        {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-        {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-        {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0}};
+    public void initializeBoardFields(int[][] boardShape) {
+       ArrayList<BoardField> fields = new ArrayList<>();
+       DefaultStartFields startFields = new DefaultStartFields();
 
-        ArrayList<BoardField> fields = new ArrayList<>();
+       int xPosition;
+       int defXPosition = 50;
+       int yPosition = 50;
 
-        int xPosition;
-        int defXPosition = 50;
-        int yPosition = 50;
-        int pColorID = PlayerColor.NO_PLAYER.playerColorID;
-        int sColorID = StatusColor.INACTIVE.statusColorID;
+       int pColorID = PlayerColor.NO_PLAYER.playerColorID;
+       int sColorID = StatusColor.INACTIVE.statusColorID;
 
-        for (int i = 0; i < defaultBoardShape.length; i++) {
-            if(i % 2 == 0){xPosition = defXPosition;}
-            else { xPosition = defXPosition + 25;}
-            for (int j = 0; j < defaultBoardShape[0].length; j++){
-                if(defaultBoardShape[i][j] == 1){
-                    BoardField field = new BoardField(i, j, xPosition, yPosition, pColorID, sColorID);
-                    fields.add(field);
-                }
-                xPosition += 40;
-            }
-            yPosition += 30;
-        }
-        this.board.setFields(fields);
-        this.board.setStartFields();
+       for (int i = 0; i < boardShape.length; i++) {
+           if(i % 2 == 0){xPosition = defXPosition;}
+           else { xPosition = defXPosition + 25;}
+
+           for (int j = 0; j < boardShape[0].length; j++) {
+               if (boardShape[i][j] != 0) {
+                   BoardField field = new BoardField(i, j, xPosition, yPosition, pColorID, sColorID);
+
+                   startFields.addField(field, boardShape[i][j]);
+                   fields.add(field);
+               }
+               xPosition += 40;
+           }
+           yPosition += 30;
+       }
+       this.board.setFields(fields);
+       this.board.setStartFields(startFields);
     }
 
     @Override
@@ -75,70 +65,13 @@ public class DefaultBoardBuilder implements BoardBuilder{
 
     @Override
     public void assignFields(int numberOfPlayers) {
-        switch (numberOfPlayers) {
-            case 2: {
-                for (BoardField field : this.board.startFields.topFields) {
-                    field.setPlayerColor(PlayerColor.BLUE);
-                }
-                for (BoardField field : this.board.startFields.bottomFields) {
-                    field.setPlayerColor(PlayerColor.GREEN);
-                }
-                break;
-            }
-
-            case 3: {
-                for (BoardField field : this.board.startFields.topLeftFields) {
-                    field.setPlayerColor(PlayerColor.BLUE);
-                }
-                for (BoardField field : this.board.startFields.topRightFields) {
-                    field.setPlayerColor(PlayerColor.GREEN);
-                }
-                for (BoardField field : this.board.startFields.bottomFields) {
-                    field.setPlayerColor(PlayerColor.YELLOW);
-                }
-                break;
-            }
-
-            case 4: {
-                for (BoardField field : this.board.startFields.topLeftFields) {
-                    field.setPlayerColor(PlayerColor.BLUE);
-                }
-                for (BoardField field : this.board.startFields.topRightFields) {
-                    field.setPlayerColor(PlayerColor.GREEN);
-                }
-                for (BoardField field : this.board.startFields.bottomLeftFields) {
-                    field.setPlayerColor(PlayerColor.YELLOW);
-                }
-                for (BoardField field : this.board.startFields.bottomRightFields) {
-                    field.setPlayerColor(PlayerColor.ORANGE);
-                }
-                break;
-            }
-
-            case 6: {
-                for (BoardField field : this.board.startFields.topFields) {
-                    field.setPlayerColor(PlayerColor.BLUE);
-                }
-                for (BoardField field : this.board.startFields.topLeftFields) {
-                    field.setPlayerColor(PlayerColor.GREEN);
-                }
-                for (BoardField field : this.board.startFields.topRightFields) {
-                    field.setPlayerColor(PlayerColor.YELLOW);
-                }
-                for (BoardField field : this.board.startFields.bottomLeftFields) {
-                    field.setPlayerColor(PlayerColor.ORANGE);
-                }
-                for (BoardField field : this.board.startFields.bottomRightFields) {
-                    field.setPlayerColor(PlayerColor.PINK);
-                }
-                for (BoardField field : this.board.startFields.bottomFields) {
-                    field.setPlayerColor(PlayerColor.PURPLE);
-                }
-                break;
-            }
-        }
+        this.board.startFields.setPlayerColors(numberOfPlayers);
     }
 
+    /**
+     * @return returns a board created by the builder
+     *
+     */
     public DefaultBoard getDefaultBoard(){
         return this.board;
     }

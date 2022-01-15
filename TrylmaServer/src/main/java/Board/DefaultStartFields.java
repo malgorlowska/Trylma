@@ -2,6 +2,13 @@ package Board;
 
 import java.util.ArrayList;
 
+/**
+ * Stores references to start fields.
+ * Start fields are important part of the Board,
+ * they determine where players start their games
+ * and allow checking if one of the players won.
+ *
+ */
 public class DefaultStartFields {
     public ArrayList<BoardField> topFields = new ArrayList<>();
     public ArrayList<BoardField> topLeftFields = new ArrayList<>();
@@ -10,78 +17,106 @@ public class DefaultStartFields {
     public ArrayList<BoardField> bottomLeftFields = new ArrayList<>();
     public ArrayList<BoardField> bottomRightFields = new ArrayList<>();
 
-
-    public DefaultStartFields (DefaultBoard board){
-        initTop(board);
-        initTopLeft(board);
-        initTopRight(board);
-        initBottom(board);
-        initBottomLeft(board);
-        initBottomRight(board);
-    }
-
-    void initTop(DefaultBoard board) {
-        for (BoardField field : board.fields) {
-            if (field.getRow() < 4) {
-                this.topFields.add(field);
+    /**
+     * Adds field to the right starting fields
+     *
+     * @param field the field we are adding
+     * @param fieldCharacteristic field characteristic number in  int[][] array
+     *
+     */
+    public void addField(BoardField field, int fieldCharacteristic) {
+        switch (fieldCharacteristic) {
+            case 1 : {
+                topFields.add(field);
+                break;
+            }
+            case 2 : {
+                topRightFields.add(field);
+                break;
+            }
+            case 3 : {
+                bottomRightFields.add(field);
+                break;
+            }
+            case 4 : {
+                bottomFields.add(field);
+                break;
+            }
+            case 5 : {
+                bottomLeftFields.add(field);
+                break;
+            }
+            case 6 : {
+                topLeftFields.add(field);
+                break;
             }
         }
     }
 
-    void initTopLeft(DefaultBoard board) {
-        for (BoardField field : board.fields) {
-            if (field.getRow() == 4 && field.getColumn() < 4) {
-                this.topLeftFields.add(field);
+    /**
+     * Assigns start fields to players
+     * at the start of the game
+     * @param numOfPlayers number of players in the game
+     *
+     */
+    public void setPlayerColors(int numOfPlayers) {
+        switch (numOfPlayers) {
+            case 2: {
+                for (BoardField field : this.topFields) {
+                    field.setPlayerColor(PlayerColor.BLUE);
+                }
+                for (BoardField field : this.bottomFields) {
+                    field.setPlayerColor(PlayerColor.GREEN);
+                }
+                break;
             }
-            else if ((field.getRow() == 5 || field.getRow() == 6) && field.getColumn() < 3) {
-                this.topLeftFields.add(field);
+            case 3: {
+                for (BoardField field : this.topLeftFields) {
+                    field.setPlayerColor(PlayerColor.BLUE);
+                }
+                for (BoardField field : this.topRightFields) {
+                    field.setPlayerColor(PlayerColor.GREEN);
+                }
+                for (BoardField field : this.bottomFields) {
+                    field.setPlayerColor(PlayerColor.YELLOW);
+                }
+                break;
             }
-            else if (field.getRow() == 7 && field.getColumn() < 2){
-                this.topLeftFields.add(field);
+            case 4: {
+                for (BoardField field : this.topLeftFields) {
+                    field.setPlayerColor(PlayerColor.BLUE);
+                }
+                for (BoardField field : this.topRightFields) {
+                    field.setPlayerColor(PlayerColor.GREEN);
+                }
+                for (BoardField field : this.bottomLeftFields) {
+                    field.setPlayerColor(PlayerColor.YELLOW);
+                }
+                for (BoardField field : this.bottomRightFields) {
+                    field.setPlayerColor(PlayerColor.ORANGE);
+                }
+                break;
             }
-        }
-    }
-
-    void initTopRight(DefaultBoard board) {
-        for (BoardField field : board.fields) {
-            if ((field.getRow() == 4 || field.getRow() == 5) && field.getColumn() > 8) {
-                this.topRightFields.add(field);
-            }
-            else if ((field.getRow() == 6 || field.getRow() == 7) && field.getColumn() > 9) {
-                this.topRightFields.add(field);
-            }
-        }
-    }
-
-    void initBottom(DefaultBoard board) {
-        for (BoardField field : board.fields) {
-            if (field.getRow() > 12) {
-                this.bottomFields.add(field);
-            }
-        }
-    }
-
-    void initBottomLeft(DefaultBoard board) {
-        for (BoardField field : board.fields) {
-            if (field.getRow() == 12 && field.getColumn() < 4) {
-                this.bottomLeftFields.add(field);
-            }
-            else if ((field.getRow() == 11 || field.getRow() == 10) && field.getColumn() < 3) {
-                this.bottomLeftFields.add(field);
-            }
-            else if (field.getRow() == 9 && field.getColumn() < 2){
-                this.bottomLeftFields.add(field);
-            }
-        }
-    }
-
-    void initBottomRight(DefaultBoard board) {
-        for (BoardField field : board.fields) {
-            if ((field.getRow() == 12 || field.getRow() == 11) && field.getColumn() > 8) {
-                this.bottomRightFields.add(field);
-            }
-            else if ((field.getRow() == 10 || field.getRow() == 9) && field.getColumn() > 9) {
-                this.bottomRightFields.add(field);
+            case 6: {
+                for (BoardField field : this.topFields) {
+                    field.setPlayerColor(PlayerColor.BLUE);
+                }
+                for (BoardField field : this.topLeftFields) {
+                    field.setPlayerColor(PlayerColor.GREEN);
+                }
+                for (BoardField field : this.topRightFields) {
+                    field.setPlayerColor(PlayerColor.YELLOW);
+                }
+                for (BoardField field : this.bottomLeftFields) {
+                    field.setPlayerColor(PlayerColor.ORANGE);
+                }
+                for (BoardField field : this.bottomRightFields) {
+                    field.setPlayerColor(PlayerColor.PINK);
+                }
+                for (BoardField field : this.bottomFields) {
+                    field.setPlayerColor(PlayerColor.PURPLE);
+                }
+                break;
             }
         }
     }

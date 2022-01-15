@@ -1,10 +1,23 @@
 package board;
 
+/**
+ * Converts a board to a JSON String
+ * which can be turned back to Board
+ * by JSONBoardConverter
+ *
+ */
 public class JSONBoardConverter {
     private final StringBuilder jsonBuilder = new StringBuilder();
 
+    /**
+     * Converts a board to a JSON String
+     *
+     * @param board board we want to convert
+     * @return JSON String that stores board data
+     *
+     */
     public String buildJSONBoard(Board board) {
-        jsonBuilder.append("{fields:[");
+            addContent("{fields:[");
         for (BoardField field : board.fields) {
             addContent("{\"row\":\"" + field.getRow() + "\",");
             addContent("\"column\":\"" + field.getColumn() + "\",");
@@ -20,9 +33,14 @@ public class JSONBoardConverter {
         }
         addContent("]}");
 
-        return this.jsonBuilder.toString();
+        return jsonBuilder.toString();
     }
 
+    /**
+     * Ads data to the JSON String
+     * @param content data to add
+     *
+     */
     public void addContent(String content) {
         jsonBuilder.append(content);
     }
