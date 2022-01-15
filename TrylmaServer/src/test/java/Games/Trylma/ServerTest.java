@@ -64,20 +64,20 @@ public class ServerTest {
 
         Game game = new Game(players, 2);
 
-        for(BoardField f:  game.getBoard().startFields.bottomFields)
+        for(BoardField f:  game.getBoard().startFields.topFields)
             f.setPlayerColor(PlayerColor.fromInteger(player1.getPlayerId()));
 
         assertTrue(!game.getRules().isWinner(game,player1.getPlayerId()));
         assertTrue(!game.getRules().isWinner(game,player2.getPlayerId()));
         assertTrue(!game.getRules().isWinner(game,player3.getPlayerId()));
 
-        for(BoardField f:  game.getBoard().startFields.bottomFields)
+        for(BoardField f:  game.getBoard().startFields.topFields)
             f.setPlayerColor(PlayerColor.fromInteger(player2.getPlayerId()));
         assertTrue(!game.getRules().isWinner(game,player1.getPlayerId()));
         assertTrue(!game.getRules().isWinner(game,player2.getPlayerId()));
         assertTrue(!game.getRules().isWinner(game,player3.getPlayerId()));
 
-        for(BoardField f:  game.getBoard().startFields.bottomFields)
+        for(BoardField f:  game.getBoard().startFields.topFields)
             f.setPlayerColor(PlayerColor.fromInteger(player3.getPlayerId()));
         assertTrue(!game.getRules().isWinner(game,player1.getPlayerId()));
         assertTrue(!game.getRules().isWinner(game,player2.getPlayerId()));
