@@ -14,7 +14,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 import static org.junit.Assert.assertTrue;
@@ -22,15 +21,13 @@ import static org.junit.Assert.assertTrue;
 public class ServerTest {
     @Test
     public void calculatingMove() throws IOException {
-        SocketServer server = new SocketServer(4574,2,2);
+        SocketServer server = new SocketServer(4574,2);
         Player player1 = createMockedPlayer();
         Player player2 = createMockedPlayer();
         List<Player> players = new ArrayList<>();
         players.add(player1);
         players.add(player2);
-
-        int boardShape = 2;
-        Game game = new Game(players, boardShape);
+        Game game = new Game(players);
 
         String validBoardBefore = Files.readString(Path.of("E:\\workspace\\Trylma\\TrylmaServer\\board1.txt"));
         validBoardBefore = validBoardBefore.replaceAll("\\s+","");
@@ -40,18 +37,18 @@ public class ServerTest {
 
         String initializationData = game.getInitializationData(1);
         initializationData = initializationData.replaceAll("\\s+","");
-        assertEquals(validBoardBefore, initializationData);
+        assertTrue(validBoardBefore.equals(initializationData));
 
         game.move(7, 16, 1);
         JSONBoardConverter converter = new JSONBoardConverter();
         String updatedBoard = converter.buildJSONBoard(game.getBoard());
         System.out.println(updatedBoard);
 
-        assertEquals(validBoardAfter, updatedBoard);
+        assertTrue(validBoardAfter.equals(updatedBoard));
     }
     @Test
     public void whoWinTheGame(){
-        SocketServer server = new SocketServer(4576,3,2);
+        SocketServer server = new SocketServer(4576,3);
         Player player1 = createMockedPlayer();
         Player player2 = createMockedPlayer();
         Player player3 = createMockedPlayer();
@@ -65,8 +62,7 @@ public class ServerTest {
         players.add(player2);
         players.add(player3);
 
-        int boardShape = 2;
-        Game game = new Game(players, boardShape);
+        Game game = new Game(players);
 
         for(BoardField f:  game.getBoard().startFields.bottomFields)
             f.setPlayerColor(PlayerColor.fromInteger(player1.getPlayerId()));
@@ -89,8 +85,8 @@ public class ServerTest {
     }
 
     @Test
-    public void ifPlayerCouldMove(){
-        SocketServer server = new SocketServer(4577,3,2);
+    public void ifPlayerCouldMove() throws IOException {
+        SocketServer server = new SocketServer(4577,3);
         Player player1 = createMockedPlayer();
         Player player2 = createMockedPlayer();
         Player player3 = createMockedPlayer();
@@ -104,8 +100,7 @@ public class ServerTest {
         players.add(player2);
         players.add(player3);
 
-        int boardShape = 2;
-        Game game = new Game(players, boardShape);
+        Game game = new Game(players);
 
         game.setCurrentPlayer(2);
         try{
@@ -114,7 +109,35 @@ public class ServerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    @Test
+    public void setAvailableFields() throws IOException {
+        SocketServer server = new SocketServer(4578,3);
+        Player player1 = createMockedPlayer();
+        Player player2 = createMockedPlayer();
+        Player player3 = createMockedPlayer();
+        List<Player> players = new ArrayList<>();
+
+        when(player1.getPlayerId()).thenReturn(1);
+        when(player2.getPlayerId()).thenReturn(2);
+        when(player3.getPlayerId()).thenReturn(3);
+
+        players.add(player1);
+        players.add(player2);
+        players.add(player3);
+
+        Game game = new Game(players);
+
+        String boardBefore = Files.readString(Path.of("E:\\workspace\\Trylma\\TrylmaServer\\boardBeforeSetAvailableFields.txt"));
+        boardBefore = boardBefore.replaceAll("\\s+","");
+
+        game.setCurrentPlayer(2);
+        game.showPossibilities(44,2);
+        ArrayList<Integer> availableFields= game.getRules().getAvailableFields();
+        assertTrue(availableFields.size() == 2);
+        assertTrue(availableFields.get(0) == 43);
+        assertTrue(availableFields.get(1) == 54);
     }
 
 
