@@ -1,6 +1,7 @@
 package Game;
 
 import Board.*;
+import database.MovingController;
 import socketServer.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class Game {
     TrylmaRules rules;
     Board board;
     JSONBoardConverter converter;
-
+    MovingController mController;
     /**
      * Constructor
      * Sets all necessary variables,
@@ -36,6 +37,7 @@ public class Game {
         this.rules = new TrylmaRules(playersCount);
         this.currentPlayer = PlayerColor.BLUE.playerColorID;
         this.converter = new JSONBoardConverter();
+        this.mController = new MovingController();
 
         DefaultBoardBuilder boardBuilder = new DefaultBoardBuilder();
         BoardShapes boardShapes = new BoardShapes(boardSize);
